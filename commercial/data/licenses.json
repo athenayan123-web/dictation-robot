@@ -1,0 +1,92 @@
+{
+  "DR-DC69F30EDD56C389": {
+    "key": "DR-DC69F30EDD56C389",
+    "user_id": "user_007",
+    "plan": "free",
+    "plan_name": "免费体验版",
+    "created_at": "2026-03-09T01:33:20.718285",
+    "expires_at": "2027-03-09T01:33:20.718285",
+    "status": "active"
+  },
+  "DR-B593F79F9B21AB6C": {
+    "key": "DR-B593F79F9B21AB6C",
+    "user_id": "user_010",
+    "plan": "free",
+    "plan_name": "免费体验版",
+    "created_at": "2026-03-09T01:33:20.718285",
+    "expires_at": "2027-03-09T01:33:20.718285",
+    "status": "active"
+  },
+  "DR-F3B5EE6EC795926E": {
+    "key": "DR-F3B5EE6EC795926E",
+    "user_id": "user_011",
+    "plan": "basic",
+    "plan_name": "基础版",
+    "created_at": "2026-03-09T01:33:20.803679",
+    "expires_at": "2027-03-09T01:33:20.803679",
+    "status": "active"
+  },
+  "DR-BCC53D7F842CBE47": {
+    "key": "DR-BCC53D7F842CBE47",
+    "user_id": "user_017",
+    "plan": "basic",
+    "plan_name": "基础版",
+    "created_at": "2026-03-09T01:33:20.806674",
+    "expires_at": "2027-03-09T01:33:20.806674",
+    "status": "active"
+  },
+  "DR-279E243592971872": {
+    "key": "DR-279E243592971872",
+    "user_id": "user_003",
+    "plan": "pro",
+    "plan_name": "进阶版",
+    "created_at": "2026-03-09T01:37:29.577883",
+    "expires_at": "2027-03-09T01:37:29.577883",
+    "status": "active"
+  },
+  "DR-6D8D441E0E581DE4": {
+    "key": "DR-6D8D441E0E581DE4",
+    "user_id": "user_010",
+    "plan": "free",
+    "plan_name": "免费体验版",
+    "created_at": "2026-03-09T01:37:29.577883",
+    "expires_at": "2027-03-09T01:37:29.577883",
+    "status": "active"
+  },
+  "DR-8C575269FA35ECA2": {
+    "key": "DR-8C575269FA35ECA2",
+    "user_id": "user_011",
+    "plan": "basic",
+    "plan_name": "基础版",
+    "created_at": "2026-03-09T01:37:29.825510",
+    "expires_at": "2027-03-09T01:37:29.825510",
+    "status": "active"
+  },
+  "DR-EA8A412C1C2B8924": {
+    "key": "DR-EA8A412C1C2B8924",
+    "user_id": "user_014",
+    "plan": "basic",
+    "plan_name": "基础版",
+    "created_at": "2026-03-09T01:37:29.833280",
+    "expires_at": "2027-03-09T01:37:29.833280",
+    "status": "active"
+  },
+  "DR-88E60ABEE78E902E": {
+    "key": "DR-88E60ABEE78E902E",
+    "user_id": "user_017",
+    "plan": "basic",
+    "plan_name": "基础版",
+    "created_at": "2026-03-09T01:37:29.847525",
+    "expires_at": "2027-03-09T01:37:29.847525",
+    "status": "active"
+  },
+  "DR-EA138968665E7B52": {
+    "key": "DR-EA138968665E7B52",
+    "user_id": "user_020",
+    "plan": "basic",
+    "plan_name": "基础版",
+    "created_at": "2026-03-09T01:37:29.910306",
+    "expires_at": "2027-03-09T01:37:29.910306",
+    "status": "active"
+  }
+}

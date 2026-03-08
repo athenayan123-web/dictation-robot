@@ -1,0 +1,1311 @@
+{
+  "start_time": "2026-03-09T01:37:29.577883",
+  "end_time": "2026-03-09T01:37:30.002318",
+  "total_tests": 200,
+  "passed": 175,
+  "failed": 25,
+  "users": [
+    {
+      "user": {
+        "id": "user_001",
+        "name": "学生1",
+        "grade": "3年级下册",
+        "plan": "free",
+        "email": "student1@xuejun306.edu.cn"
+      },
+      "tests": [
+        {
+          "name": "许可证生成",
+          "status": "PASS",
+          "key": "DR-B509EA65E9FEE182"
+        },
+        {
+          "name": "许可证验证",
+          "status": "FAIL",
+          "error": "许可证验证失败: {'valid': False, 'error': '许可证不存在'}"
+        },
+        {
+          "name": "功能权限检查",
+          "status": "PASS",
+          "result": "True"
+        },
+        {
+          "name": "版本限制检查",
+          "status": "PASS",
+          "result": "{'words_allowed': 20, 'words_blocked': 5, 'max_tasks': 3, 'memory_curve': False, 'photo_ocr': False, 'mistake_book': False}"
+        },
+        {
+          "name": "完整听写流程",
+          "status": "PASS",
+          "result": "{'total': 10, 'correct': 7, 'accuracy': 70.0, 'mistakes': '(免费版不可用)'}"
+        },
+        {
+          "name": "预约类型权限",
+          "status": "PASS",
+          "result": "{'once': True, 'daily': False, 'weekly': False, 'custom': False}"
+        },
+        {
+          "name": "并发访问(10次)",
+          "status": "PASS",
+          "result": "{'operations': 10, 'avg_time_ms': 13.22, 'max_time_ms': 20.75}"
+        },
+        {
+          "name": "记忆曲线模拟",
+          "status": "PASS",
+          "result": "{'status': 'skipped', 'reason': '当前版本不支持'}"
+        },
+        {
+          "name": "拍照识别权限",
+          "status": "PASS",
+          "result": "{'status': 'blocked', 'message': '免费体验版不支持拍照识别'}"
+        },
+        {
+          "name": "多用户权限",
+          "status": "PASS",
+          "result": "{'status': 'single_user', 'message': '免费体验版仅支持单用户'}"
+        }
+      ],
+      "passed": 9,
+      "failed": 1,
+      "start_time": "2026-03-09T01:37:29.577883",
+      "end_time": "2026-03-09T01:37:29.825510"
+    },
+    {
+      "user": {
+        "id": "user_004",
+        "name": "学生4",
+        "grade": "1年级上册",
+        "plan": "free",
+        "email": "student4@xuejun306.edu.cn"
+      },
+      "tests": [
+        {
+          "name": "许可证生成",
+          "status": "PASS",
+          "key": "DR-86D974A49E42FDAD"
+        },
+        {
+          "name": "许可证验证",
+          "status": "FAIL",
+          "error": "许可证验证失败: {'valid': False, 'error': '许可证不存在'}"
+        },
+        {
+          "name": "功能权限检查",
+          "status": "PASS",
+          "result": "True"
+        },
+        {
+          "name": "版本限制检查",
+          "status": "PASS",
+          "result": "{'words_allowed': 20, 'words_blocked': 5, 'max_tasks': 3, 'memory_curve': False, 'photo_ocr': False, 'mistake_book': False}"
+        },
+        {
+          "name": "完整听写流程",
+          "status": "PASS",
+          "result": "{'total': 10, 'correct': 8, 'accuracy': 80.0, 'mistakes': '(免费版不可用)'}"
+        },
+        {
+          "name": "预约类型权限",
+          "status": "PASS",
+          "result": "{'once': True, 'daily': False, 'weekly': False, 'custom': False}"
+        },
+        {
+          "name": "并发访问(10次)",
+          "status": "PASS",
+          "result": "{'operations': 10, 'avg_time_ms': 13.78, 'max_time_ms': 26.53}"
+        },
+        {
+          "name": "记忆曲线模拟",
+          "status": "PASS",
+          "result": "{'status': 'skipped', 'reason': '当前版本不支持'}"
+        },
+        {
+          "name": "拍照识别权限",
+          "status": "PASS",
+          "result": "{'status': 'blocked', 'message': '免费体验版不支持拍照识别'}"
+        },
+        {
+          "name": "多用户权限",
+          "status": "PASS",
+          "result": "{'status': 'single_user', 'message': '免费体验版仅支持单用户'}"
+        }
+      ],
+      "passed": 9,
+      "failed": 1,
+      "start_time": "2026-03-09T01:37:29.577883",
+      "end_time": "2026-03-09T01:37:29.833280"
+    },
+    {
+      "user": {
+        "id": "user_002",
+        "name": "学生2",
+        "grade": "5年级下册",
+        "plan": "basic",
+        "email": "student2@xuejun306.edu.cn"
+      },
+      "tests": [
+        {
+          "name": "许可证生成",
+          "status": "PASS",
+          "key": "DR-CDCEE7A949CD75E1"
+        },
+        {
+          "name": "许可证验证",
+          "status": "FAIL",
+          "error": "许可证验证失败: {'valid': False, 'error': '许可证不存在'}"
+        },
+        {
+          "name": "功能权限检查",
+          "status": "FAIL",
+          "error": "权限检查失败: memory_curve: 期望True, 实际False; mistake_book: 期望True, 实际False; custom_words: 期望True, 实际False; ads: 期望False, 实际True; watermark: 期望False, 实际True"
+        },
+        {
+          "name": "版本限制检查",
+          "status": "PASS",
+          "result": "{'words_allowed': 25, 'words_blocked': 0, 'max_tasks': 20, 'memory_curve': True, 'photo_ocr': False, 'mistake_book': True}"
+        },
+        {
+          "name": "完整听写流程",
+          "status": "PASS",
+          "result": "{'total': 10, 'correct': 7, 'accuracy': 70.0, 'mistakes': ['逆风', '融化', '剪刀']}"
+        },
+        {
+          "name": "预约类型权限",
+          "status": "PASS",
+          "result": "{'once': True, 'daily': True, 'weekly': True, 'custom': False}"
+        },
+        {
+          "name": "并发访问(10次)",
+          "status": "PASS",
+          "result": "{'operations': 10, 'avg_time_ms': 13.09, 'max_time_ms': 25.53}"
+        },
+        {
+          "name": "记忆曲线模拟",
+          "status": "PASS",
+          "result": "{'days_simulated': 30, 'final_interval': 17.1, 'final_ef': 1.8, 'total_reviews': 30}"
+        },
+        {
+          "name": "拍照识别权限",
+          "status": "PASS",
+          "result": "{'status': 'blocked', 'message': '基础版不支持拍照识别'}"
+        },
+        {
+          "name": "多用户权限",
+          "status": "PASS",
+          "result": "{'status': 'single_user', 'message': '基础版仅支持单用户'}"
+        }
+      ],
+      "passed": 8,
+      "failed": 2,
+      "start_time": "2026-03-09T01:37:29.577883",
+      "end_time": "2026-03-09T01:37:29.833280"
+    },
+    {
+      "user": {
+        "id": "user_007",
+        "name": "学生7",
+        "grade": "3年级下册",
+        "plan": "free",
+        "email": "student7@xuejun306.edu.cn"
+      },
+      "tests": [
+        {
+          "name": "许可证生成",
+          "status": "PASS",
+          "key": "DR-81862650B5CC9C93"
+        },
+        {
+          "name": "许可证验证",
+          "status": "FAIL",
+          "error": "许可证验证失败: {'valid': False, 'error': '许可证不存在'}"
+        },
+        {
+          "name": "功能权限检查",
+          "status": "PASS",
+          "result": "True"
+        },
+        {
+          "name": "版本限制检查",
+          "status": "PASS",
+          "result": "{'words_allowed': 20, 'words_blocked': 5, 'max_tasks': 3, 'memory_curve': False, 'photo_ocr': False, 'mistake_book': False}"
+        },
+        {
+          "name": "完整听写流程",
+          "status": "PASS",
+          "result": "{'total': 10, 'correct': 6, 'accuracy': 60.0, 'mistakes': '(免费版不可用)'}"
+        },
+        {
+          "name": "预约类型权限",
+          "status": "PASS",
+          "result": "{'once': True, 'daily': False, 'weekly': False, 'custom': False}"
+        },
+        {
+          "name": "并发访问(10次)",
+          "status": "PASS",
+          "result": "{'operations': 10, 'avg_time_ms': 13.09, 'max_time_ms': 25.53}"
+        },
+        {
+          "name": "记忆曲线模拟",
+          "status": "PASS",
+          "result": "{'status': 'skipped', 'reason': '当前版本不支持'}"
+        },
+        {
+          "name": "拍照识别权限",
+          "status": "PASS",
+          "result": "{'status': 'blocked', 'message': '免费体验版不支持拍照识别'}"
+        },
+        {
+          "name": "多用户权限",
+          "status": "PASS",
+          "result": "{'status': 'single_user', 'message': '免费体验版仅支持单用户'}"
+        }
+      ],
+      "passed": 9,
+      "failed": 1,
+      "start_time": "2026-03-09T01:37:29.577883",
+      "end_time": "2026-03-09T01:37:29.833280"
+    },
+    {
+      "user": {
+        "id": "user_010",
+        "name": "学生10",
+        "grade": "3年级上册",
+        "plan": "free",
+        "email": "student10@xuejun306.edu.cn"
+      },
+      "tests": [
+        {
+          "name": "许可证生成",
+          "status": "PASS",
+          "key": "DR-6D8D441E0E581DE4"
+        },
+        {
+          "name": "许可证验证",
+          "status": "PASS",
+          "result": "{'valid': True, 'plan': 'free', 'plan_name': '免费体验版', 'features': {'max_grades': 2, 'max_words_per_day': 20, 'tts_enabled': True, 'repeat_count': 3, 'interval_sec': 5, 'schedule_types': ['once'], 'mem"
+        },
+        {
+          "name": "功能权限检查",
+          "status": "PASS",
+          "result": "True"
+        },
+        {
+          "name": "版本限制检查",
+          "status": "PASS",
+          "result": "{'words_allowed': 20, 'words_blocked': 5, 'max_tasks': 3, 'memory_curve': False, 'photo_ocr': False, 'mistake_book': False}"
+        },
+        {
+          "name": "完整听写流程",
+          "status": "PASS",
+          "result": "{'total': 10, 'correct': 8, 'accuracy': 80.0, 'mistakes': '(免费版不可用)'}"
+        },
+        {
+          "name": "预约类型权限",
+          "status": "PASS",
+          "result": "{'once': True, 'daily': False, 'weekly': False, 'custom': False}"
+        },
+        {
+          "name": "并发访问(10次)",
+          "status": "PASS",
+          "result": "{'operations': 10, 'avg_time_ms': 14.03, 'max_time_ms': 24.53}"
+        },
+        {
+          "name": "记忆曲线模拟",
+          "status": "PASS",
+          "result": "{'status': 'skipped', 'reason': '当前版本不支持'}"
+        },
+        {
+          "name": "拍照识别权限",
+          "status": "PASS",
+          "result": "{'status': 'blocked', 'message': '免费体验版不支持拍照识别'}"
+        },
+        {
+          "name": "多用户权限",
+          "status": "PASS",
+          "result": "{'status': 'single_user', 'message': '免费体验版仅支持单用户'}"
+        }
+      ],
+      "passed": 10,
+      "failed": 0,
+      "start_time": "2026-03-09T01:37:29.577883",
+      "end_time": "2026-03-09T01:37:29.833280"
+    },
+    {
+      "user": {
+        "id": "user_005",
+        "name": "学生5",
+        "grade": "3年级上册",
+        "plan": "basic",
+        "email": "student5@xuejun306.edu.cn"
+      },
+      "tests": [
+        {
+          "name": "许可证生成",
+          "status": "PASS",
+          "key": "DR-C1B2BBC8D7ECE00D"
+        },
+        {
+          "name": "许可证验证",
+          "status": "FAIL",
+          "error": "许可证验证失败: {'valid': False, 'error': '许可证不存在'}"
+        },
+        {
+          "name": "功能权限检查",
+          "status": "FAIL",
+          "error": "权限检查失败: memory_curve: 期望True, 实际False; mistake_book: 期望True, 实际False; custom_words: 期望True, 实际False; ads: 期望False, 实际True; watermark: 期望False, 实际True"
+        },
+        {
+          "name": "版本限制检查",
+          "status": "PASS",
+          "result": "{'words_allowed': 25, 'words_blocked': 0, 'max_tasks': 20, 'memory_curve': True, 'photo_ocr': False, 'mistake_book': True}"
+        },
+        {
+          "name": "完整听写流程",
+          "status": "PASS",
+          "result": "{'total': 10, 'correct': 7, 'accuracy': 70.0, 'mistakes': ['轻风', '减轻', '莲蓬']}"
+        },
+        {
+          "name": "预约类型权限",
+          "status": "PASS",
+          "result": "{'once': True, 'daily': True, 'weekly': True, 'custom': False}"
+        },
+        {
+          "name": "并发访问(10次)",
+          "status": "PASS",
+          "result": "{'operations': 10, 'avg_time_ms': 13.82, 'max_time_ms': 36.03}"
+        },
+        {
+          "name": "记忆曲线模拟",
+          "status": "PASS",
+          "result": "{'days_simulated': 30, 'final_interval': 12.2, 'final_ef': 1.56, 'total_reviews': 30}"
+        },
+        {
+          "name": "拍照识别权限",
+          "status": "PASS",
+          "result": "{'status': 'blocked', 'message': '基础版不支持拍照识别'}"
+        },
+        {
+          "name": "多用户权限",
+          "status": "PASS",
+          "result": "{'status': 'single_user', 'message': '基础版仅支持单用户'}"
+        }
+      ],
+      "passed": 8,
+      "failed": 2,
+      "start_time": "2026-03-09T01:37:29.577883",
+      "end_time": "2026-03-09T01:37:29.846516"
+    },
+    {
+      "user": {
+        "id": "user_008",
+        "name": "学生8",
+        "grade": "4年级下册",
+        "plan": "basic",
+        "email": "student8@xuejun306.edu.cn"
+      },
+      "tests": [
+        {
+          "name": "许可证生成",
+          "status": "PASS",
+          "key": "DR-C7E5F03921B05733"
+        },
+        {
+          "name": "许可证验证",
+          "status": "FAIL",
+          "error": "许可证验证失败: {'valid': False, 'error': '许可证不存在'}"
+        },
+        {
+          "name": "功能权限检查",
+          "status": "FAIL",
+          "error": "权限检查失败: memory_curve: 期望True, 实际False; mistake_book: 期望True, 实际False; custom_words: 期望True, 实际False; ads: 期望False, 实际True; watermark: 期望False, 实际True"
+        },
+        {
+          "name": "版本限制检查",
+          "status": "PASS",
+          "result": "{'words_allowed': 25, 'words_blocked': 0, 'max_tasks': 20, 'memory_curve': True, 'photo_ocr': False, 'mistake_book': True}"
+        },
+        {
+          "name": "完整听写流程",
+          "status": "PASS",
+          "result": "{'total': 10, 'correct': 7, 'accuracy': 70.0, 'mistakes': ['赶紧', '梅花', '杨梅']}"
+        },
+        {
+          "name": "预约类型权限",
+          "status": "PASS",
+          "result": "{'once': True, 'daily': True, 'weekly': True, 'custom': False}"
+        },
+        {
+          "name": "并发访问(10次)",
+          "status": "PASS",
+          "result": "{'operations': 10, 'avg_time_ms': 14.51, 'max_time_ms': 36.69}"
+        },
+        {
+          "name": "记忆曲线模拟",
+          "status": "PASS",
+          "result": "{'days_simulated': 30, 'final_interval': 16.8, 'final_ef': 2.52, 'total_reviews': 30}"
+        },
+        {
+          "name": "拍照识别权限",
+          "status": "PASS",
+          "result": "{'status': 'blocked', 'message': '基础版不支持拍照识别'}"
+        },
+        {
+          "name": "多用户权限",
+          "status": "PASS",
+          "result": "{'status': 'single_user', 'message': '基础版仅支持单用户'}"
+        }
+      ],
+      "passed": 8,
+      "failed": 2,
+      "start_time": "2026-03-09T01:37:29.577883",
+      "end_time": "2026-03-09T01:37:29.847525"
+    },
+    {
+      "user": {
+        "id": "user_003",
+        "name": "学生3",
+        "grade": "2年级下册",
+        "plan": "pro",
+        "email": "student3@xuejun306.edu.cn"
+      },
+      "tests": [
+        {
+          "name": "许可证生成",
+          "status": "PASS",
+          "key": "DR-279E243592971872"
+        },
+        {
+          "name": "许可证验证",
+          "status": "FAIL",
+          "error": "许可证验证失败: {'valid': False, 'error': '许可证不存在'}"
+        },
+        {
+          "name": "功能权限检查",
+          "status": "PASS",
+          "result": "True"
+        },
+        {
+          "name": "版本限制检查",
+          "status": "PASS",
+          "result": "{'words_allowed': 25, 'words_blocked': 0, 'max_tasks': 999, 'memory_curve': True, 'photo_ocr': True, 'mistake_book': True}"
+        },
+        {
+          "name": "完整听写流程",
+          "status": "PASS",
+          "result": "{'total': 10, 'correct': 8, 'accuracy': 80.0, 'mistakes': ['杨梅', '剪刀']}"
+        },
+        {
+          "name": "预约类型权限",
+          "status": "PASS",
+          "result": "{'once': True, 'daily': True, 'weekly': True, 'custom': True}"
+        },
+        {
+          "name": "并发访问(10次)",
+          "status": "PASS",
+          "result": "{'operations': 10, 'avg_time_ms': 22.67, 'max_time_ms': 88.18}"
+        },
+        {
+          "name": "记忆曲线模拟",
+          "status": "PASS",
+          "result": "{'days_simulated': 30, 'final_interval': 1, 'final_ef': 1.3, 'total_reviews': 30}"
+        },
+        {
+          "name": "拍照识别权限",
+          "status": "PASS",
+          "result": "{'status': 'allowed', 'daily_limit': 20}"
+        },
+        {
+          "name": "多用户权限",
+          "status": "PASS",
+          "result": "{'status': 'multi_user', 'max_members': 5}"
+        }
+      ],
+      "passed": 9,
+      "failed": 1,
+      "start_time": "2026-03-09T01:37:29.577883",
+      "end_time": "2026-03-09T01:37:29.905609"
+    },
+    {
+      "user": {
+        "id": "user_006",
+        "name": "学生6",
+        "grade": "5年级上册",
+        "plan": "pro",
+        "email": "student6@xuejun306.edu.cn"
+      },
+      "tests": [
+        {
+          "name": "许可证生成",
+          "status": "PASS",
+          "key": "DR-0C8CFA0C30FCCA1A"
+        },
+        {
+          "name": "许可证验证",
+          "status": "FAIL",
+          "error": "许可证验证失败: {'valid': False, 'error': '许可证不存在'}"
+        },
+        {
+          "name": "功能权限检查",
+          "status": "FAIL",
+          "error": "权限检查失败: memory_curve: 期望True, 实际False; mistake_book: 期望True, 实际False; photo_ocr: 期望True, 实际False; custom_words: 期望True, 实际False; export_report: 期望True, 实际False; multi_user: 期望True, 实际False; ads: 期望False, 实际True; watermark: 期望False, 实际True; priority_support: 期望True, 实际False"
+        },
+        {
+          "name": "版本限制检查",
+          "status": "PASS",
+          "result": "{'words_allowed': 25, 'words_blocked': 0, 'max_tasks': 999, 'memory_curve': True, 'photo_ocr': True, 'mistake_book': True}"
+        },
+        {
+          "name": "完整听写流程",
+          "status": "PASS",
+          "result": "{'total': 10, 'correct': 6, 'accuracy': 60.0, 'mistakes': ['活泼', '春光', '广泛', '消融']}"
+        },
+        {
+          "name": "预约类型权限",
+          "status": "PASS",
+          "result": "{'once': True, 'daily': True, 'weekly': True, 'custom': True}"
+        },
+        {
+          "name": "并发访问(10次)",
+          "status": "PASS",
+          "result": "{'operations': 10, 'avg_time_ms': 28.19, 'max_time_ms': 92.88}"
+        },
+        {
+          "name": "记忆曲线模拟",
+          "status": "PASS",
+          "result": "{'days_simulated': 30, 'final_interval': 36.7, 'final_ef': 1.66, 'total_reviews': 30}"
+        },
+        {
+          "name": "拍照识别权限",
+          "status": "PASS",
+          "result": "{'status': 'allowed', 'daily_limit': 20}"
+        },
+        {
+          "name": "多用户权限",
+          "status": "PASS",
+          "result": "{'status': 'multi_user', 'max_members': 5}"
+        }
+      ],
+      "passed": 8,
+      "failed": 2,
+      "start_time": "2026-03-09T01:37:29.577883",
+      "end_time": "2026-03-09T01:37:29.910306"
+    },
+    {
+      "user": {
+        "id": "user_009",
+        "name": "学生9",
+        "grade": "4年级下册",
+        "plan": "pro",
+        "email": "student9@xuejun306.edu.cn"
+      },
+      "tests": [
+        {
+          "name": "许可证生成",
+          "status": "PASS",
+          "key": "DR-05DF785C4FB21F3C"
+        },
+        {
+          "name": "许可证验证",
+          "status": "FAIL",
+          "error": "许可证验证失败: {'valid': False, 'error': '许可证不存在'}"
+        },
+        {
+          "name": "功能权限检查",
+          "status": "FAIL",
+          "error": "权限检查失败: memory_curve: 期望True, 实际False; mistake_book: 期望True, 实际False; photo_ocr: 期望True, 实际False; custom_words: 期望True, 实际False; export_report: 期望True, 实际False; multi_user: 期望True, 实际False; ads: 期望False, 实际True; watermark: 期望False, 实际True; priority_support: 期望True, 实际False"
+        },
+        {
+          "name": "版本限制检查",
+          "status": "PASS",
+          "result": "{'words_allowed': 25, 'words_blocked': 0, 'max_tasks': 999, 'memory_curve': True, 'photo_ocr': True, 'mistake_book': True}"
+        },
+        {
+          "name": "完整听写流程",
+          "status": "PASS",
+          "result": "{'total': 10, 'correct': 4, 'accuracy': 40.0, 'mistakes': ['活泼', '春光', '融化', '赶集', '轻风', '崇高']}"
+        },
+        {
+          "name": "预约类型权限",
+          "status": "PASS",
+          "result": "{'once': True, 'daily': True, 'weekly': True, 'custom': True}"
+        },
+        {
+          "name": "并发访问(10次)",
+          "status": "PASS",
+          "result": "{'operations': 10, 'avg_time_ms': 31.56, 'max_time_ms': 92.88}"
+        },
+        {
+          "name": "记忆曲线模拟",
+          "status": "PASS",
+          "result": "{'days_simulated': 30, 'final_interval': 11493.5, 'final_ef': 2.7, 'total_reviews': 30}"
+        },
+        {
+          "name": "拍照识别权限",
+          "status": "PASS",
+          "result": "{'status': 'allowed', 'daily_limit': 20}"
+        },
+        {
+          "name": "多用户权限",
+          "status": "PASS",
+          "result": "{'status': 'multi_user', 'max_members': 5}"
+        }
+      ],
+      "passed": 8,
+      "failed": 2,
+      "start_time": "2026-03-09T01:37:29.577883",
+      "end_time": "2026-03-09T01:37:29.910306"
+    },
+    {
+      "user": {
+        "id": "user_011",
+        "name": "学生11",
+        "grade": "5年级下册",
+        "plan": "basic",
+        "email": "student11@xuejun306.edu.cn"
+      },
+      "tests": [
+        {
+          "name": "许可证生成",
+          "status": "PASS",
+          "key": "DR-8C575269FA35ECA2"
+        },
+        {
+          "name": "许可证验证",
+          "status": "FAIL",
+          "error": "许可证验证失败: {'valid': False, 'error': '许可证不存在'}"
+        },
+        {
+          "name": "功能权限检查",
+          "status": "PASS",
+          "result": "True"
+        },
+        {
+          "name": "版本限制检查",
+          "status": "PASS",
+          "result": "{'words_allowed': 25, 'words_blocked': 0, 'max_tasks': 20, 'memory_curve': True, 'photo_ocr': False, 'mistake_book': True}"
+        },
+        {
+          "name": "完整听写流程",
+          "status": "PASS",
+          "result": "{'total': 10, 'correct': 8, 'accuracy': 80.0, 'mistakes': ['优惠', '清香']}"
+        },
+        {
+          "name": "预约类型权限",
+          "status": "PASS",
+          "result": "{'once': True, 'daily': True, 'weekly': True, 'custom': False}"
+        },
+        {
+          "name": "并发访问(10次)",
+          "status": "PASS",
+          "result": "{'operations': 10, 'avg_time_ms': 11.6, 'max_time_ms': 22.18}"
+        },
+        {
+          "name": "记忆曲线模拟",
+          "status": "PASS",
+          "result": "{'days_simulated': 30, 'final_interval': 5.5, 'final_ef': 1.4, 'total_reviews': 30}"
+        },
+        {
+          "name": "拍照识别权限",
+          "status": "PASS",
+          "result": "{'status': 'blocked', 'message': '基础版不支持拍照识别'}"
+        },
+        {
+          "name": "多用户权限",
+          "status": "PASS",
+          "result": "{'status': 'single_user', 'message': '基础版仅支持单用户'}"
+        }
+      ],
+      "passed": 9,
+      "failed": 1,
+      "start_time": "2026-03-09T01:37:29.825510",
+      "end_time": "2026-03-09T01:37:29.993278"
+    },
+    {
+      "user": {
+        "id": "user_013",
+        "name": "学生13",
+        "grade": "5年级上册",
+        "plan": "free",
+        "email": "student13@xuejun306.edu.cn"
+      },
+      "tests": [
+        {
+          "name": "许可证生成",
+          "status": "PASS",
+          "key": "DR-D37221DFFB93A036"
+        },
+        {
+          "name": "许可证验证",
+          "status": "FAIL",
+          "error": "许可证验证失败: {'valid': False, 'error': '许可证不存在'}"
+        },
+        {
+          "name": "功能权限检查",
+          "status": "PASS",
+          "result": "True"
+        },
+        {
+          "name": "版本限制检查",
+          "status": "PASS",
+          "result": "{'words_allowed': 20, 'words_blocked': 5, 'max_tasks': 3, 'memory_curve': False, 'photo_ocr': False, 'mistake_book': False}"
+        },
+        {
+          "name": "完整听写流程",
+          "status": "PASS",
+          "result": "{'total': 10, 'correct': 7, 'accuracy': 70.0, 'mistakes': '(免费版不可用)'}"
+        },
+        {
+          "name": "预约类型权限",
+          "status": "PASS",
+          "result": "{'once': True, 'daily': False, 'weekly': False, 'custom': False}"
+        },
+        {
+          "name": "并发访问(10次)",
+          "status": "PASS",
+          "result": "{'operations': 10, 'avg_time_ms': 11.55, 'max_time_ms': 23.01}"
+        },
+        {
+          "name": "记忆曲线模拟",
+          "status": "PASS",
+          "result": "{'status': 'skipped', 'reason': '当前版本不支持'}"
+        },
+        {
+          "name": "拍照识别权限",
+          "status": "PASS",
+          "result": "{'status': 'blocked', 'message': '免费体验版不支持拍照识别'}"
+        },
+        {
+          "name": "多用户权限",
+          "status": "PASS",
+          "result": "{'status': 'single_user', 'message': '免费体验版仅支持单用户'}"
+        }
+      ],
+      "passed": 9,
+      "failed": 1,
+      "start_time": "2026-03-09T01:37:29.833280",
+      "end_time": "2026-03-09T01:37:29.993278"
+    },
+    {
+      "user": {
+        "id": "user_016",
+        "name": "学生16",
+        "grade": "1年级下册",
+        "plan": "free",
+        "email": "student16@xuejun306.edu.cn"
+      },
+      "tests": [
+        {
+          "name": "许可证生成",
+          "status": "PASS",
+          "key": "DR-7EBF082C065469FC"
+        },
+        {
+          "name": "许可证验证",
+          "status": "FAIL",
+          "error": "许可证验证失败: {'valid': False, 'error': '许可证不存在'}"
+        },
+        {
+          "name": "功能权限检查",
+          "status": "PASS",
+          "result": "True"
+        },
+        {
+          "name": "版本限制检查",
+          "status": "PASS",
+          "result": "{'words_allowed': 20, 'words_blocked': 5, 'max_tasks': 3, 'memory_curve': False, 'photo_ocr': False, 'mistake_book': False}"
+        },
+        {
+          "name": "完整听写流程",
+          "status": "PASS",
+          "result": "{'total': 10, 'correct': 3, 'accuracy': 30.0, 'mistakes': '(免费版不可用)'}"
+        },
+        {
+          "name": "预约类型权限",
+          "status": "PASS",
+          "result": "{'once': True, 'daily': False, 'weekly': False, 'custom': False}"
+        },
+        {
+          "name": "并发访问(10次)",
+          "status": "PASS",
+          "result": "{'operations': 10, 'avg_time_ms': 11.38, 'max_time_ms': 20.9}"
+        },
+        {
+          "name": "记忆曲线模拟",
+          "status": "PASS",
+          "result": "{'status': 'skipped', 'reason': '当前版本不支持'}"
+        },
+        {
+          "name": "拍照识别权限",
+          "status": "PASS",
+          "result": "{'status': 'blocked', 'message': '免费体验版不支持拍照识别'}"
+        },
+        {
+          "name": "多用户权限",
+          "status": "PASS",
+          "result": "{'status': 'single_user', 'message': '免费体验版仅支持单用户'}"
+        }
+      ],
+      "passed": 9,
+      "failed": 1,
+      "start_time": "2026-03-09T01:37:29.846516",
+      "end_time": "2026-03-09T01:37:29.993278"
+    },
+    {
+      "user": {
+        "id": "user_014",
+        "name": "学生14",
+        "grade": "2年级上册",
+        "plan": "basic",
+        "email": "student14@xuejun306.edu.cn"
+      },
+      "tests": [
+        {
+          "name": "许可证生成",
+          "status": "PASS",
+          "key": "DR-EA8A412C1C2B8924"
+        },
+        {
+          "name": "许可证验证",
+          "status": "FAIL",
+          "error": "许可证验证失败: {'valid': False, 'error': '许可证不存在'}"
+        },
+        {
+          "name": "功能权限检查",
+          "status": "PASS",
+          "result": "True"
+        },
+        {
+          "name": "版本限制检查",
+          "status": "PASS",
+          "result": "{'words_allowed': 25, 'words_blocked': 0, 'max_tasks': 20, 'memory_curve': True, 'photo_ocr': False, 'mistake_book': True}"
+        },
+        {
+          "name": "完整听写流程",
+          "status": "PASS",
+          "result": "{'total': 10, 'correct': 6, 'accuracy': 60.0, 'mistakes': ['逆风', '乌黑', '活泼', '梅花']}"
+        },
+        {
+          "name": "预约类型权限",
+          "status": "PASS",
+          "result": "{'once': True, 'daily': True, 'weekly': True, 'custom': False}"
+        },
+        {
+          "name": "并发访问(10次)",
+          "status": "PASS",
+          "result": "{'operations': 10, 'avg_time_ms': 10.53, 'max_time_ms': 19.9}"
+        },
+        {
+          "name": "记忆曲线模拟",
+          "status": "PASS",
+          "result": "{'days_simulated': 30, 'final_interval': 1, 'final_ef': 1.4, 'total_reviews': 30}"
+        },
+        {
+          "name": "拍照识别权限",
+          "status": "PASS",
+          "result": "{'status': 'blocked', 'message': '基础版不支持拍照识别'}"
+        },
+        {
+          "name": "多用户权限",
+          "status": "PASS",
+          "result": "{'status': 'single_user', 'message': '基础版仅支持单用户'}"
+        }
+      ],
+      "passed": 9,
+      "failed": 1,
+      "start_time": "2026-03-09T01:37:29.833280",
+      "end_time": "2026-03-09T01:37:29.993278"
+    },
+    {
+      "user": {
+        "id": "user_017",
+        "name": "学生17",
+        "grade": "5年级上册",
+        "plan": "basic",
+        "email": "student17@xuejun306.edu.cn"
+      },
+      "tests": [
+        {
+          "name": "许可证生成",
+          "status": "PASS",
+          "key": "DR-88E60ABEE78E902E"
+        },
+        {
+          "name": "许可证验证",
+          "status": "PASS",
+          "result": "{'valid': True, 'plan': 'basic', 'plan_name': '基础版', 'features': {'max_grades': 12, 'max_words_per_day': 100, 'tts_enabled': True, 'repeat_count': 5, 'interval_sec': 10, 'schedule_types': ['once', 'da"
+        },
+        {
+          "name": "功能权限检查",
+          "status": "PASS",
+          "result": "True"
+        },
+        {
+          "name": "版本限制检查",
+          "status": "PASS",
+          "result": "{'words_allowed': 25, 'words_blocked': 0, 'max_tasks': 20, 'memory_curve': True, 'photo_ocr': False, 'mistake_book': True}"
+        },
+        {
+          "name": "完整听写流程",
+          "status": "PASS",
+          "result": "{'total': 10, 'correct': 5, 'accuracy': 50.0, 'mistakes': ['赶紧', '减轻', '逆风', '豆芽', '公园']}"
+        },
+        {
+          "name": "预约类型权限",
+          "status": "PASS",
+          "result": "{'once': True, 'daily': True, 'weekly': True, 'custom': False}"
+        },
+        {
+          "name": "并发访问(10次)",
+          "status": "PASS",
+          "result": "{'operations': 10, 'avg_time_ms': 11.55, 'max_time_ms': 22.62}"
+        },
+        {
+          "name": "记忆曲线模拟",
+          "status": "PASS",
+          "result": "{'days_simulated': 30, 'final_interval': 1, 'final_ef': 1.3, 'total_reviews': 30}"
+        },
+        {
+          "name": "拍照识别权限",
+          "status": "PASS",
+          "result": "{'status': 'blocked', 'message': '基础版不支持拍照识别'}"
+        },
+        {
+          "name": "多用户权限",
+          "status": "PASS",
+          "result": "{'status': 'single_user', 'message': '基础版仅支持单用户'}"
+        }
+      ],
+      "passed": 10,
+      "failed": 0,
+      "start_time": "2026-03-09T01:37:29.847525",
+      "end_time": "2026-03-09T01:37:29.998003"
+    },
+    {
+      "user": {
+        "id": "user_012",
+        "name": "学生12",
+        "grade": "6年级上册",
+        "plan": "pro",
+        "email": "student12@xuejun306.edu.cn"
+      },
+      "tests": [
+        {
+          "name": "许可证生成",
+          "status": "PASS",
+          "key": "DR-3B36929523871D73"
+        },
+        {
+          "name": "许可证验证",
+          "status": "FAIL",
+          "error": "许可证验证失败: {'valid': False, 'error': '许可证不存在'}"
+        },
+        {
+          "name": "功能权限检查",
+          "status": "FAIL",
+          "error": "权限检查失败: memory_curve: 期望True, 实际False; mistake_book: 期望True, 实际False; photo_ocr: 期望True, 实际False; custom_words: 期望True, 实际False; export_report: 期望True, 实际False; multi_user: 期望True, 实际False; ads: 期望False, 实际True; watermark: 期望False, 实际True; priority_support: 期望True, 实际False"
+        },
+        {
+          "name": "版本限制检查",
+          "status": "PASS",
+          "result": "{'words_allowed': 25, 'words_blocked': 0, 'max_tasks': 999, 'memory_curve': True, 'photo_ocr': True, 'mistake_book': True}"
+        },
+        {
+          "name": "完整听写流程",
+          "status": "PASS",
+          "result": "{'total': 10, 'correct': 5, 'accuracy': 50.0, 'mistakes': ['燕子', '剪刀', '消融', '融化', '杨梅']}"
+        },
+        {
+          "name": "预约类型权限",
+          "status": "PASS",
+          "result": "{'once': True, 'daily': True, 'weekly': True, 'custom': True}"
+        },
+        {
+          "name": "并发访问(10次)",
+          "status": "PASS",
+          "result": "{'operations': 10, 'avg_time_ms': 12.2, 'max_time_ms': 22.02}"
+        },
+        {
+          "name": "记忆曲线模拟",
+          "status": "PASS",
+          "result": "{'days_simulated': 30, 'final_interval': 3.9, 'final_ef': 1.3, 'total_reviews': 30}"
+        },
+        {
+          "name": "拍照识别权限",
+          "status": "PASS",
+          "result": "{'status': 'allowed', 'daily_limit': 20}"
+        },
+        {
+          "name": "多用户权限",
+          "status": "PASS",
+          "result": "{'status': 'multi_user', 'max_members': 5}"
+        }
+      ],
+      "passed": 8,
+      "failed": 2,
+      "start_time": "2026-03-09T01:37:29.833280",
+      "end_time": "2026-03-09T01:37:29.999629"
+    },
+    {
+      "user": {
+        "id": "user_019",
+        "name": "学生19",
+        "grade": "5年级上册",
+        "plan": "free",
+        "email": "student19@xuejun306.edu.cn"
+      },
+      "tests": [
+        {
+          "name": "许可证生成",
+          "status": "PASS",
+          "key": "DR-57BAE6E356A0CCDF"
+        },
+        {
+          "name": "许可证验证",
+          "status": "FAIL",
+          "error": "许可证验证失败: {'valid': False, 'error': '许可证不存在'}"
+        },
+        {
+          "name": "功能权限检查",
+          "status": "PASS",
+          "result": "True"
+        },
+        {
+          "name": "版本限制检查",
+          "status": "PASS",
+          "result": "{'words_allowed': 20, 'words_blocked': 5, 'max_tasks': 3, 'memory_curve': False, 'photo_ocr': False, 'mistake_book': False}"
+        },
+        {
+          "name": "完整听写流程",
+          "status": "PASS",
+          "result": "{'total': 10, 'correct': 4, 'accuracy': 40.0, 'mistakes': '(免费版不可用)'}"
+        },
+        {
+          "name": "预约类型权限",
+          "status": "PASS",
+          "result": "{'once': True, 'daily': False, 'weekly': False, 'custom': False}"
+        },
+        {
+          "name": "并发访问(10次)",
+          "status": "PASS",
+          "result": "{'operations': 10, 'avg_time_ms': 12.32, 'max_time_ms': 22.02}"
+        },
+        {
+          "name": "记忆曲线模拟",
+          "status": "PASS",
+          "result": "{'status': 'skipped', 'reason': '当前版本不支持'}"
+        },
+        {
+          "name": "拍照识别权限",
+          "status": "PASS",
+          "result": "{'status': 'blocked', 'message': '免费体验版不支持拍照识别'}"
+        },
+        {
+          "name": "多用户权限",
+          "status": "PASS",
+          "result": "{'status': 'single_user', 'message': '免费体验版仅支持单用户'}"
+        }
+      ],
+      "passed": 9,
+      "failed": 1,
+      "start_time": "2026-03-09T01:37:29.910306",
+      "end_time": "2026-03-09T01:37:29.999629"
+    },
+    {
+      "user": {
+        "id": "user_015",
+        "name": "学生15",
+        "grade": "4年级上册",
+        "plan": "pro",
+        "email": "student15@xuejun306.edu.cn"
+      },
+      "tests": [
+        {
+          "name": "许可证生成",
+          "status": "PASS",
+          "key": "DR-D62DB5481A8E5A35"
+        },
+        {
+          "name": "许可证验证",
+          "status": "FAIL",
+          "error": "许可证验证失败: {'valid': False, 'error': '许可证不存在'}"
+        },
+        {
+          "name": "功能权限检查",
+          "status": "FAIL",
+          "error": "权限检查失败: memory_curve: 期望True, 实际False; mistake_book: 期望True, 实际False; photo_ocr: 期望True, 实际False; custom_words: 期望True, 实际False; export_report: 期望True, 实际False; multi_user: 期望True, 实际False; ads: 期望False, 实际True; watermark: 期望False, 实际True; priority_support: 期望True, 实际False"
+        },
+        {
+          "name": "版本限制检查",
+          "status": "PASS",
+          "result": "{'words_allowed': 25, 'words_blocked': 0, 'max_tasks': 999, 'memory_curve': True, 'photo_ocr': True, 'mistake_book': True}"
+        },
+        {
+          "name": "完整听写流程",
+          "status": "PASS",
+          "result": "{'total': 10, 'correct': 9, 'accuracy': 90.0, 'mistakes': ['春光']}"
+        },
+        {
+          "name": "预约类型权限",
+          "status": "PASS",
+          "result": "{'once': True, 'daily': True, 'weekly': True, 'custom': True}"
+        },
+        {
+          "name": "并发访问(10次)",
+          "status": "PASS",
+          "result": "{'operations': 10, 'avg_time_ms': 11.29, 'max_time_ms': 20.26}"
+        },
+        {
+          "name": "记忆曲线模拟",
+          "status": "PASS",
+          "result": "{'days_simulated': 30, 'final_interval': 1, 'final_ef': 1.3, 'total_reviews': 30}"
+        },
+        {
+          "name": "拍照识别权限",
+          "status": "PASS",
+          "result": "{'status': 'allowed', 'daily_limit': 20}"
+        },
+        {
+          "name": "多用户权限",
+          "status": "PASS",
+          "result": "{'status': 'multi_user', 'max_members': 5}"
+        }
+      ],
+      "passed": 8,
+      "failed": 2,
+      "start_time": "2026-03-09T01:37:29.833280",
+      "end_time": "2026-03-09T01:37:30.000814"
+    },
+    {
+      "user": {
+        "id": "user_020",
+        "name": "学生20",
+        "grade": "5年级下册",
+        "plan": "basic",
+        "email": "student20@xuejun306.edu.cn"
+      },
+      "tests": [
+        {
+          "name": "许可证生成",
+          "status": "PASS",
+          "key": "DR-EA138968665E7B52"
+        },
+        {
+          "name": "许可证验证",
+          "status": "PASS",
+          "result": "{'valid': True, 'plan': 'basic', 'plan_name': '基础版', 'features': {'max_grades': 12, 'max_words_per_day': 100, 'tts_enabled': True, 'repeat_count': 5, 'interval_sec': 10, 'schedule_types': ['once', 'da"
+        },
+        {
+          "name": "功能权限检查",
+          "status": "PASS",
+          "result": "True"
+        },
+        {
+          "name": "版本限制检查",
+          "status": "PASS",
+          "result": "{'words_allowed': 25, 'words_blocked': 0, 'max_tasks': 20, 'memory_curve': True, 'photo_ocr': False, 'mistake_book': True}"
+        },
+        {
+          "name": "完整听写流程",
+          "status": "PASS",
+          "result": "{'total': 10, 'correct': 5, 'accuracy': 50.0, 'mistakes': ['豆芽', '莲蓬', '燕子', '崇高', '记号']}"
+        },
+        {
+          "name": "预约类型权限",
+          "status": "PASS",
+          "result": "{'once': True, 'daily': True, 'weekly': True, 'custom': False}"
+        },
+        {
+          "name": "并发访问(10次)",
+          "status": "PASS",
+          "result": "{'operations': 10, 'avg_time_ms': 13.06, 'max_time_ms': 20.26}"
+        },
+        {
+          "name": "记忆曲线模拟",
+          "status": "PASS",
+          "result": "{'days_simulated': 30, 'final_interval': 4.9, 'final_ef': 1.62, 'total_reviews': 30}"
+        },
+        {
+          "name": "拍照识别权限",
+          "status": "PASS",
+          "result": "{'status': 'blocked', 'message': '基础版不支持拍照识别'}"
+        },
+        {
+          "name": "多用户权限",
+          "status": "PASS",
+          "result": "{'status': 'single_user', 'message': '基础版仅支持单用户'}"
+        }
+      ],
+      "passed": 10,
+      "failed": 0,
+      "start_time": "2026-03-09T01:37:29.910306",
+      "end_time": "2026-03-09T01:37:30.000814"
+    },
+    {
+      "user": {
+        "id": "user_018",
+        "name": "学生18",
+        "grade": "3年级上册",
+        "plan": "pro",
+        "email": "student18@xuejun306.edu.cn"
+      },
+      "tests": [
+        {
+          "name": "许可证生成",
+          "status": "PASS",
+          "key": "DR-754AE2BE8971C61D"
+        },
+        {
+          "name": "许可证验证",
+          "status": "FAIL",
+          "error": "许可证验证失败: {'valid': False, 'error': '许可证不存在'}"
+        },
+        {
+          "name": "功能权限检查",
+          "status": "FAIL",
+          "error": "权限检查失败: memory_curve: 期望True, 实际False; mistake_book: 期望True, 实际False; photo_ocr: 期望True, 实际False; custom_words: 期望True, 实际False; export_report: 期望True, 实际False; multi_user: 期望True, 实际False; ads: 期望False, 实际True; watermark: 期望False, 实际True; priority_support: 期望True, 实际False"
+        },
+        {
+          "name": "版本限制检查",
+          "status": "PASS",
+          "result": "{'words_allowed': 25, 'words_blocked': 0, 'max_tasks': 999, 'memory_curve': True, 'photo_ocr': True, 'mistake_book': True}"
+        },
+        {
+          "name": "完整听写流程",
+          "status": "PASS",
+          "result": "{'total': 10, 'correct': 8, 'accuracy': 80.0, 'mistakes': ['减少', '赶紧']}"
+        },
+        {
+          "name": "预约类型权限",
+          "status": "PASS",
+          "result": "{'once': True, 'daily': True, 'weekly': True, 'custom': True}"
+        },
+        {
+          "name": "并发访问(10次)",
+          "status": "PASS",
+          "result": "{'operations': 10, 'avg_time_ms': 9.11, 'max_time_ms': 14.55}"
+        },
+        {
+          "name": "记忆曲线模拟",
+          "status": "PASS",
+          "result": "{'days_simulated': 30, 'final_interval': 1, 'final_ef': 1.3, 'total_reviews': 30}"
+        },
+        {
+          "name": "拍照识别权限",
+          "status": "PASS",
+          "result": "{'status': 'allowed', 'daily_limit': 20}"
+        },
+        {
+          "name": "多用户权限",
+          "status": "PASS",
+          "result": "{'status': 'multi_user', 'max_members': 5}"
+        }
+      ],
+      "passed": 8,
+      "failed": 2,
+      "start_time": "2026-03-09T01:37:29.905609",
+      "end_time": "2026-03-09T01:37:30.002318"
+    }
+  ],
+  "errors": [],
+  "performance": {}
+}
