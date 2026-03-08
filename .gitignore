@@ -1,0 +1,17 @@
+node_modules/
+__pycache__/
+*.pyc
+.pytest_cache/
+*.log
+uploads/
+audio-cache/
+user-data/
+data/.secrets.enc
+data/config.json
+data/dictation.db
+*.enc
+~$*
+.DS_Store
+Thumbs.db
+deploy/private.key
+preview_qrcode.jpg

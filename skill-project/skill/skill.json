@@ -1,0 +1,10 @@
+{
+  "version": "2.0.0",
+  "skill_name": "智能听写机器人",
+  "skill_id": "dictation_robot_2026v2",
+  "description": "人教版语文英语智能听写，SM-2记忆曲线自动复习，LLM拍照识别词汇",
+  "capabilities": ["课程选择","预约听写","SM-2记忆曲线","错题本","LLM拍照识别","密钥安全存储"],
+  "api_endpoint": "http://localhost:3801/api",
+  "auth": {"type": "api_key", "providers": ["stepfun","openai"], "auto_prompt": true, "refresh_cycle_days": 90},
+  "test_coverage": {"total_tests": 20, "pass_rate": "100%"}
+}

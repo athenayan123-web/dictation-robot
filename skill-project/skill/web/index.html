@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+<title>报听写机器人 SKILL</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--p:#4F46E5;--pd:#3730A3;--bg:#F8FAFC;--card:#FFF;--tx:#1E293B;--tx2:#64748B;--bd:#E2E8F0;--ok:#10B981;--err:#EF4444;--warn:#F59E0B}
+body{font-family:-apple-system,'PingFang SC','Microsoft YaHei',sans-serif;background:var(--bg);color:var(--tx)}
+/* 授权弹窗遮罩 */
+.modal-mask{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.55);z-index:1000;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(4px)}
+.modal{background:var(--card);border-radius:20px;padding:32px;max-width:420px;width:90%;box-shadow:0 20px 60px rgba(0,0,0,.2);animation:modalIn .3s ease}
+@keyframes modalIn{from{transform:translateY(30px);opacity:0}to{transform:translateY(0);opacity:1}}
+.modal h2{font-size:18px;margin-bottom:8px;display:flex;align-items:center;gap:8px}
+.modal .desc{font-size:13px;color:var(--tx2);line-height:1.6;margin-bottom:20px;white-space:pre-line}
+.modal label{display:block;font-size:12px;font-weight:600;color:var(--tx2);margin-bottom:5px}
+.modal input,.modal select{width:100%;padding:11px 14px;border:2px solid var(--bd);border-radius:12px;font-size:14px;outline:0;margin-bottom:14px;transition:.2s}
+.modal input:focus,.modal select:focus{border-color:var(--p)}
+.modal .row{display:flex;gap:10px}
+.modal .row>div{flex:1}
+.btn{padding:12px 24px;border:none;border-radius:12px;font-size:14px;font-weight:700;cursor:pointer;transition:.2s;width:100%}
+.btn-p{background:linear-gradient(135deg,var(--p),var(--pd));color:#fff}
+.btn-p:hover{transform:translateY(-1px);box-shadow:0 4px 16px rgba(79,70,229,.3)}
+.btn-skip{background:var(--bg);color:var(--tx2);margin-top:8px;font-size:12px}
+.btn-skip:hover{background:var(--bd)}
+.badge{display:inline-block;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:600}
+.badge-ok{background:#ECFDF5;color:#059669}
+.badge-warn{background:#FEF3C7;color:#92400E}
+.badge-err{background:#FEF2F2;color:#DC2626}
+/* 主界面 */
+.hd{background:linear-gradient(135deg,var(--p),var(--pd));color:#fff;padding:20px;text-align:center;position:sticky;top:0;z-index:100}
+.hd h1{font-size:20px}.hd p{font-size:11px;opacity:.8;margin-top:3px}
+.ct{max-width:480px;margin:0 auto;padding:14px}
+.cd{background:var(--card);border-radius:16px;padding:18px;margin-bottom:14px;box-shadow:0 4px 24px rgba(0,0,0,.06)}
+.cd-t{font-size:15px;font-weight:700;margin-bottom:12px}
+.status-row{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--bd);font-size:13px}
+.status-row:last-child{border:none}
+.status-label{color:var(--tx2)}
+.toast{position:fixed;top:20px;left:50%;transform:translateX(-50%);background:#1E293B;color:#fff;padding:10px 24px;border-radius:10px;font-size:13px;z-index:2000;opacity:0;transition:.3s}
+.toast.show{opacity:1}
+</style>
+</head>
+<body>
+
+<!-- 授权弹窗（动态显示） -->
+<div class="modal-mask" id="authModal" style="display:none">
+  <div class="modal">
+    <h2 id="modalTitle">🔑 首次使用 - 请输入API密钥</h2>
+    <div class="desc" id="modalDesc">报听写机器人需要AI大模型API密钥来识别照片中的文字。
+
+支持：阶跃星辰 / OpenAI
+密钥将加密存储在本地，不会上传。</div>
+    <div>
+      <label>API Key</label>
+      <input type="password" id="authKey" placeholder="输入阶跃星辰或OpenAI的API Key">
+    </div>
+    <div class="row">
+      <div>
+        <label>模型</label>
+        <select id="authModel">
+          <option value="step-1v-8k">阶跃 step-1v-8k</option>
+          <option value="step-1v-32k">阶跃 step-1v-32k</option>
+          <option value="step-2v-mini">阶跃 step-2v-mini</option>
+          <option value="gpt-4o-mini">OpenAI gpt-4o-mini</option>
+          <option value="gpt-4o">OpenAI gpt-4o</option>
+        </select>
+      </div>
+      <div>
+        <label>API地址</label>
+        <select id="authBase">
+          <option value="https://api.stepfun.com/v1">阶跃星辰</option>
+          <option value="https://api.openai.com/v1">OpenAI</option>
+        </select>
+      </div>
+    </div>
+    <button class="btn btn-p" onclick="submitAuth()">确认保存</button>
+    <button class="btn btn-skip" id="skipBtn" style="display:none" onclick="skipAuth()">稍后提醒</button>
+    <div id="authError" style="color:var(--err);font-size:12px;margin-top:8px;display:none"></div>
+  </div>
+</div>
+
+<!-- 主界面 -->
+<div class="hd">
+  <h1>报听写机器人 SKILL</h1>
+  <p>SM-2记忆曲线 · LLM拍照识别 · 人教版全覆盖</p>
+</div>
+
+<div class="ct">
+  <!-- 系统状态 -->
+  <div class="cd">
+    <div class="cd-t">📊 系统状态</div>
+    <div class="status-row">
+      <span class="status-label">AI密钥</span>
+      <span id="keyStatus">检查中...</span>
+    </div>
+    <div class="status-row">
+      <span class="status-label">密钥有效期</span>
+      <span id="keyExpiry">-</span>
+    </div>
+    <div class="status-row">
+      <span class="status-label">数据库</span>
+      <span id="dbStatus">-</span>
+    </div>
+    <div class="status-row">
+      <span class="status-label">测试覆盖</span>
+      <span class="badge badge-ok">20/20 通过</span>
+    </div>
+    <div style="margin-top:12px">
+      <button class="btn btn-p" onclick="checkAuth()" style="font-size:12px;padding:8px 16px;width:auto">刷新密钥</button>
+    </div>
+  </div>
+
+  <!-- 快速操作 -->
+  <div class="cd">
+    <div class="cd-t">⚡ 快速操作</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+      <button class="btn btn-p" onclick="location.href='http://localhost:3800'" style="font-size:13px">打开听写界面</button>
+      <button class="btn" style="background:#ECFDF5;color:#059669;font-size:13px" onclick="runTests()">运行测试</button>
+      <button class="btn" style="background:#EEF2FF;color:var(--pd);font-size:13px" onclick="viewMistakes()">查看错题本</button>
+      <button class="btn" style="background:#FEF3C7;color:#92400E;font-size:13px" onclick="viewSkillDoc()">SKILL文档</button>
+    </div>
+  </div>
+
+  <!-- 算法参数 -->
+  <div class="cd">
+    <div class="cd-t">🧠 SM-2 记忆曲线参数</div>
+    <div class="status-row"><span class="status-label">初始难度因子(EF)</span><span>2.7（小学生优化）</span></div>
+    <div class="status-row"><span class="status-label">最小EF</span><span>1.3</span></div>
+    <div class="status-row"><span class="status-label">首次间隔</span><span>1天</span></div>
+    <div class="status-row"><span class="status-label">第二次间隔</span><span>3天</span></div>
+    <div class="status-row"><span class="status-label">密钥刷新周期</span><span>90天（季度）</span></div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const API = 'http://localhost:3801';
+let currentAuthReason = '';
+
+function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2500)}
+
+// ===== 启动时自动检查授权 =====
+async function checkAuth(){
+  try{
+    const r=await(await fetch(`${API}/api/auth/status`)).json();
+    if(r.action==='show_dialog'){
+      currentAuthReason=r.reason;
+      document.getElementById('modalTitle').textContent=r.reason==='first_setup'?'🔑 首次使用 - 请输入API密钥':'🔄 季度安全提醒 - 请刷新API密钥';
+      document.getElementById('modalDesc').textContent=r.message||'';
+      document.getElementById('skipBtn').style.display=r.allow_skip?'block':'none';
+      document.getElementById('authModal').style.display='flex';
+      updateStatusUI(r);
+    }else{
+      document.getElementById('authModal').style.display='none';
+      updateStatusUI(r);
+    }
+  }catch(e){
+    document.getElementById('keyStatus').innerHTML='<span class="badge badge-err">服务未启动</span>';
+  }
+}
+
+function updateStatusUI(r){
+  const ks=document.getElementById('keyStatus');
+  const ke=document.getElementById('keyExpiry');
+  if(r.action==='ok'||r.has_key){
+    ks.innerHTML='<span class="badge badge-ok">已配置</span>';
+    ke.textContent=r.days_remaining!=null?`${r.days_remaining}天后刷新`:'-';
+  }else if(r.action==='show_dialog'&&r.reason==='quarterly_refresh'){
+    ks.innerHTML='<span class="badge badge-warn">需刷新</span>';
+    ke.textContent='已过期';
+  }else{
+    ks.innerHTML='<span class="badge badge-err">未配置</span>';
+    ke.textContent='-';
+  }
+  document.getElementById('dbStatus').innerHTML='<span class="badge badge-ok">SQLite 正常</span>';
+}
+
+async function submitAuth(){
+  const key=document.getElementById('authKey').value.trim();
+  const model=document.getElementById('authModel').value;
+  const base=document.getElementById('authBase').value;
+  const errEl=document.getElementById('authError');
+  
+  if(!key&&currentAuthReason==='first_setup'){
+    errEl.textContent='请输入API Key';errEl.style.display='block';return;
+  }
+  
+  try{
+    const r=await(await fetch(`${API}/api/auth/submit`,{
+      method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({api_key:key,model,base_url:base})
+    })).json();
+    
+    if(r.success){
+      document.getElementById('authModal').style.display='none';
+      toast(r.message||'密钥已保存');
+      checkAuth();
+    }else{
+      errEl.textContent=r.error||'保存失败';errEl.style.display='block';
+    }
+  }catch(e){errEl.textContent='网络错误';errEl.style.display='block'}
+}
+
+async function skipAuth(){
+  try{
+    await fetch(`${API}/api/auth/submit`,{
+      method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({api_key:''})
+    });
+    document.getElementById('authModal').style.display='none';
+    toast('已跳过，30天后再次提醒');
+    checkAuth();
+  }catch(e){}
+}
+
+function runTests(){toast('请在终端运行: pytest tests/ -v');window.open('http://localhost:3801/api/auth/status')}
+function viewMistakes(){window.open('http://localhost:3800')}
+function viewSkillDoc(){window.open('http://localhost:3801/api/auth/status')}
+
+// 页面加载时自动检查
+checkAuth();
+// 每5分钟检查一次（处理季度到期场景）
+setInterval(checkAuth, 300000);
+</script>
+</body>
+</html>

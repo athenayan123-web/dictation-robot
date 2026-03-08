@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>报听写机器人</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--p:#4F46E5;--pl:#818CF8;--pd:#3730A3;--bg:#F8FAFC;--card:#FFF;--tx:#1E293B;--tx2:#64748B;--bd:#E2E8F0;--ok:#10B981;--warn:#F59E0B;--err:#EF4444;--r:16px;--sh:0 4px 24px rgba(0,0,0,.06)}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Microsoft YaHei',sans-serif;background:var(--bg);color:var(--tx);min-height:100vh}
+.hd{background:linear-gradient(135deg,var(--p),var(--pd));color:#fff;padding:20px 24px;text-align:center;position:sticky;top:0;z-index:100;box-shadow:0 2px 20px rgba(79,70,229,.3)}
+.hd h1{font-size:22px;font-weight:700}.hd p{font-size:12px;opacity:.85;margin-top:3px}
+.ct{max-width:500px;margin:0 auto;padding:14px}
+.tabs{display:flex;background:var(--card);border-radius:var(--r);padding:4px;margin-bottom:14px;box-shadow:var(--sh)}
+.tabs button{flex:1;padding:11px;border:none;background:0;border-radius:12px;font-size:13px;font-weight:600;color:var(--tx2);cursor:pointer;transition:.3s}
+.tabs .on{background:var(--p);color:#fff;box-shadow:0 2px 12px rgba(79,70,229,.3)}
+.cd{background:var(--card);border-radius:var(--r);padding:18px;margin-bottom:14px;box-shadow:var(--sh)}
+.cd-t{font-size:15px;font-weight:700;margin-bottom:14px;display:flex;align-items:center;gap:7px}
+.cd-t .ic{font-size:18px}
+.sg{margin-bottom:12px}
+.sg label{display:block;font-size:12px;font-weight:600;color:var(--tx2);margin-bottom:5px}
+.sg select,.sg input{width:100%;padding:11px 12px;border:2px solid var(--bd);border-radius:12px;font-size:14px;background:var(--bg);color:var(--tx);outline:0;transition:.3s}
+.sg select:focus,.sg input:focus{border-color:var(--p)}
+.wp{display:flex;flex-wrap:wrap;gap:7px;margin-top:10px}
+.wt{display:inline-flex;padding:5px 12px;background:linear-gradient(135deg,#EEF2FF,#E0E7FF);color:var(--pd);border-radius:18px;font-size:13px;font-weight:500}
+.wt.en{background:linear-gradient(135deg,#ECFDF5,#D1FAE5);color:#065F46}
+.wt.wrong{background:linear-gradient(135deg,#FEE2E2,#FECACA);color:#991B1B}
+.btn{width:100%;padding:13px;border:none;border-radius:12px;font-size:15px;font-weight:700;cursor:pointer;transition:.3s;margin-top:7px}
+.btn-p{background:linear-gradient(135deg,var(--p),var(--pd));color:#fff;box-shadow:0 4px 16px rgba(79,70,229,.3)}
+.btn-p:hover{transform:translateY(-1px)}.btn-p:active{transform:translateY(0)}
+.btn-ok{background:linear-gradient(135deg,var(--ok),#059669);color:#fff}
+.btn-err{background:linear-gradient(135deg,var(--err),#DC2626);color:#fff}
+.btn-warn{background:linear-gradient(135deg,var(--warn),#D97706);color:#fff}
+.btn:disabled{opacity:.5;cursor:not-allowed;transform:none!important}
+
+/* 预约面板 */
+.sch-panel{background:#F5F3FF;border-radius:14px;padding:16px;margin-top:14px;border:2px solid #E0E7FF}
+.sch-title{font-size:14px;font-weight:700;color:var(--pd);margin-bottom:12px;display:flex;align-items:center;gap:6px}
+.sch-types{display:flex;gap:6px;margin-bottom:12px;flex-wrap:wrap}
+.sch-type{padding:8px 16px;border:2px solid var(--bd);border-radius:10px;font-size:13px;font-weight:600;cursor:pointer;background:#fff;color:var(--tx2);transition:.2s}
+.sch-type.on{border-color:var(--p);background:var(--p);color:#fff}
+.sch-row{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.sch-row label{font-size:13px;font-weight:500;min-width:60px;color:var(--tx2)}
+.sch-row input,.sch-row select{flex:1;padding:9px 10px;border:2px solid var(--bd);border-radius:10px;font-size:14px;outline:0;background:#fff}
+.sch-row input:focus{border-color:var(--p)}
+.week-btns{display:flex;gap:5px;flex-wrap:wrap}
+.week-btn{width:40px;height:40px;border:2px solid var(--bd);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:600;cursor:pointer;background:#fff;color:var(--tx2);transition:.2s}
+.week-btn.on{border-color:var(--p);background:var(--p);color:#fff}
+.memory-curve-info{background:#ECFDF5;border-radius:10px;padding:12px;margin-top:10px;font-size:12px;color:#065F46}
+.memory-curve-info .title{font-weight:700;margin-bottom:4px}
+
+/* 任务卡片 */
+.task{border:1px solid var(--bd);border-radius:14px;padding:14px;margin-bottom:10px;transition:.3s;position:relative}
+.task:hover{border-color:var(--pl)}
+.task-top{display:flex;justify-content:space-between;align-items:flex-start}
+.task h4{font-size:14px;font-weight:600;margin-bottom:3px}
+.task .meta{font-size:11px;color:var(--tx2);line-height:1.6}
+.task .sch-info{display:inline-flex;align-items:center;gap:4px;padding:2px 8px;border-radius:8px;font-size:11px;font-weight:600;margin-top:4px}
+.sch-once{background:#FEF3C7;color:#92400E}.sch-daily{background:#DBEAFE;color:#1E40AF}
+.sch-weekly{background:#D1FAE5;color:#065F46}.sch-memory{background:#F3E8FF;color:#6B21A8}
+.task-acts{display:flex;gap:6px}
+.task-acts button{padding:5px 10px;border:none;border-radius:8px;font-size:11px;font-weight:600;cursor:pointer}
+.sm-play{background:#ECFDF5;color:#059669}.sm-del{background:#FEF2F2;color:#DC2626}
+.sm-toggle{background:#EEF2FF;color:var(--p)}.sm-review{background:#F3E8FF;color:#6B21A8}
+.badge{display:inline-block;padding:2px 7px;border-radius:8px;font-size:10px;font-weight:600}
+.b-on{background:#D1FAE5;color:#065F46}.b-off{background:#FEE2E2;color:#991B1B}
+.b-run{background:#DBEAFE;color:#1E40AF}.b-done{background:#F3F4F6;color:#6B7280}
+.next-run{font-size:11px;color:var(--p);font-weight:600;margin-top:4px}
+
+/* 播放 */
+.play-panel{display:none;text-align:center}.play-panel.on{display:block}
+.big-word{font-size:68px;font-weight:900;color:var(--pd);margin:28px 0;min-height:90px;display:flex;align-items:center;justify-content:center;animation:fadeUp .5s ease}
+.big-word.en{font-size:44px}
+@keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+.pbar{width:100%;height:7px;background:var(--bd);border-radius:4px;overflow:hidden;margin:14px 0}
+.pfill{height:100%;background:linear-gradient(90deg,var(--p),var(--pl));border-radius:4px;transition:width .5s}
+.pinfo{font-size:13px;color:var(--tx2);margin:6px 0}
+.dots{display:flex;justify-content:center;gap:7px;margin:10px 0}
+.dot{width:11px;height:11px;border-radius:50%;background:var(--bd);transition:.3s}
+.dot.on{background:var(--p);transform:scale(1.3)}.dot.done{background:var(--ok)}
+/* 对/错按钮 */
+.result-btns{display:flex;gap:12px;justify-content:center;margin:16px 0}
+.btn-correct{padding:12px 32px;border:none;border-radius:14px;font-size:16px;font-weight:700;cursor:pointer;background:linear-gradient(135deg,#10B981,#059669);color:#fff;box-shadow:0 3px 12px rgba(16,185,129,.3);transition:.2s;min-width:100px}
+.btn-correct:hover{transform:translateY(-2px);box-shadow:0 5px 16px rgba(16,185,129,.4)}
+.btn-correct:active{transform:translateY(0)}
+.btn-wrong{padding:12px 32px;border:none;border-radius:14px;font-size:16px;font-weight:700;cursor:pointer;background:linear-gradient(135deg,#EF4444,#DC2626);color:#fff;box-shadow:0 3px 12px rgba(239,68,68,.3);transition:.2s;min-width:100px}
+.btn-wrong:hover{transform:translateY(-2px);box-shadow:0 5px 16px rgba(239,68,68,.4)}
+.btn-wrong:active{transform:translateY(0)}
+.pause-overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.7);display:none;align-items:center;justify-content:center;z-index:1000}
+.pause-overlay.on{display:flex}
+.pause-box{background:#fff;padding:30px 50px;border-radius:20px;text-align:center}
+.pause-box .icon{font-size:60px;margin-bottom:15px}
+.pause-box h3{font-size:20px;margin-bottom:10px}
+.pause-box p{color:var(--tx2);margin-bottom:20px}
+
+/* 错题本 */
+.mistake-item{border:1px solid var(--bd);border-radius:12px;padding:12px;margin-bottom:10px}
+.mistake-item h4{font-size:14px;font-weight:600;margin-bottom:5px}
+.mistake-item .wrong-words{display:flex;flex-wrap:wrap;gap:5px;margin:8px 0}
+.mistake-item .wrong-word{background:#FEE2E2;color:#991B1B;padding:3px 10px;border-radius:15px;font-size:12px;font-weight:500}
+.mistake-item .stats{font-size:11px;color:var(--tx2)}
+
+/* 自定义词库 */
+.custom-item{border:1px solid var(--bd);border-radius:12px;padding:12px;margin-bottom:10px;display:flex;justify-content:space-between;align-items:center}
+.custom-item .info h4{font-size:14px;font-weight:600}
+.custom-item .info p{font-size:11px;color:var(--tx2)}
+
+.empty{text-align:center;padding:36px 18px;color:var(--tx2)}
+.empty .ic{font-size:44px;margin-bottom:10px}
+.toast{position:fixed;top:76px;left:50%;transform:translateX(-50%) translateY(-18px);background:var(--tx);color:#fff;padding:9px 22px;border-radius:22px;font-size:13px;opacity:0;transition:.3s;z-index:1000}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+.page{display:none}.page.on{display:block}
+.sr{display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--bd)}
+.sr:last-child{border:none}
+.sr span{font-size:13px;font-weight:500}
+.sr input{width:56px;padding:5px 8px;border:2px solid var(--bd);border-radius:8px;text-align:center;font-size:13px}
+.upload-area{border:2px dashed var(--bd);border-radius:var(--r);padding:36px 18px;text-align:center;cursor:pointer;transition:.3s}
+.upload-area:hover{border-color:var(--p);background:#F5F3FF}
+.upload-area .ic{font-size:44px;margin-bottom:10px}
+#fileInput{display:none}
+
+/* 听写控制按钮 */
+.control-btns{display:flex;gap:10px;margin-top:15px}
+.control-btns .btn{flex:1;margin-top:0}
+.result-btns{display:flex;gap:8px;margin-top:15px;justify-content:center}
+.result-btns button{padding:8px 16px;border:none;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer}
+.btn-correct{background:#D1FAE5;color:#065F46}
+.btn-wrong{background:#FEE2E2;color:#991B1B}
+</style>
+</head>
+<body>
+<div class="hd">
+  <h1>📝 报听写机器人</h1>
+  <p>人教版语文3198字 & 英语952词 · 记忆曲线 · 错题本</p>
+</div>
+<div class="ct">
+  <div class="tabs">
+    <button class="on" onclick="tab('select')">选课</button>
+    <button onclick="tab('camera')">拍照</button>
+    <button onclick="tab('tasks')">预约</button>
+    <button onclick="tab('mistakes')">错题</button>
+    <button onclick="tab('play')">播放</button>
+  </div>
+
+  <!-- ===== 选课 ===== -->
+  <div id="p-select" class="page on">
+    <div class="cd">
+      <div class="cd-t"><span class="ic">📚</span>选择课程</div>
+      <div class="sg"><label>科目</label><select id="sSubj" onchange="ldGrades()"><option value="">请选择</option><option value="chinese">语文（人教版）</option><option value="english">英语（人教版PEP）</option></select></div>
+      <div class="sg"><label>年级</label><select id="sGrade" onchange="ldUnits()" disabled><option>请先选科目</option></select></div>
+      <div class="sg"><label>单元</label><select id="sUnit" onchange="ldLessons()" disabled><option>请先选年级</option></select></div>
+      <div class="sg"><label>课文</label><select id="sLesson" onchange="ldWords()" disabled><option>请先选单元</option></select></div>
+    </div>
+    <div class="cd" id="previewCard" style="display:none">
+      <div class="cd-t"><span class="ic">✏️</span>词汇预览 (<span id="wCnt">0</span>个)</div>
+      <div class="wp" id="wPreview"></div>
+      <div style="margin-top:14px">
+        <div class="sr"><span>每个读几遍</span><div><input type="number" id="iRepeat" value="3" min="1" max="10"> 遍</div></div>
+        <div class="sr"><span>间隔时间</span><div><input type="number" id="iInterval" value="5" min="1" max="30"> 秒</div></div>
+      </div>
+
+      <!-- 预约面板 -->
+      <div class="sch-panel">
+        <div class="sch-title">📅 预约设置</div>
+        <div class="sch-types">
+          <div class="sch-type on" onclick="setSchType('once',this)">单次</div>
+          <div class="sch-type" onclick="setSchType('daily',this)">每天</div>
+          <div class="sch-type" onclick="setSchType('weekly',this)">每周</div>
+          <div class="sch-type" onclick="setSchType('memory',this)">记忆曲线</div>
+        </div>
+        <div id="sch-once">
+          <div class="sch-row"><label>日期</label><input type="date" id="schDate"></div>
+          <div class="sch-row"><label>时间</label><input type="time" id="schTime1" value="07:30"></div>
+        </div>
+        <div id="sch-daily" style="display:none">
+          <div class="sch-row"><label>每天</label><input type="time" id="schTime2" value="07:30"></div>
+          <div class="sch-row"><label>截止</label><input type="date" id="schEnd1"></div>
+        </div>
+        <div id="sch-weekly" style="display:none">
+          <div class="sch-row"><label>周几</label><div class="week-btns"><div class="week-btn" data-d="1" onclick="togWeek(this)">一</div><div class="week-btn" data-d="2" onclick="togWeek(this)">二</div><div class="week-btn" data-d="3" onclick="togWeek(this)">三</div><div class="week-btn" data-d="4" onclick="togWeek(this)">四</div><div class="week-btn" data-d="5" onclick="togWeek(this)">五</div><div class="week-btn" data-d="6" onclick="togWeek(this)">六</div><div class="week-btn" data-d="7" onclick="togWeek(this)">日</div></div></div>
+          <div class="sch-row"><label>时间</label><input type="time" id="schTime3" value="07:30"></div>
+          <div class="sch-row"><label>截止</label><input type="date" id="schEnd2"></div>
+        </div>
+        <div id="sch-memory" style="display:none">
+          <div class="memory-curve-info">
+            <div class="title">🧠 艾宾浩斯遗忘曲线复习计划</div>
+            <div>将在以下时间点自动复习：5分钟后、30分钟后、12小时后、1天后、2天后、4天后、7天后、15天后</div>
+          </div>
+        </div>
+      </div>
+
+      <button class="btn btn-p" onclick="createTask()" style="margin-top:14px">创建预约任务</button>
+      <button class="btn btn-ok" onclick="startNow()">立即开始听写</button>
+    </div>
+  </div>
+
+  <!-- ===== 拍照 ===== -->
+  <div id="p-camera" class="page">
+    <!-- LLM配置卡片 -->
+    <div class="cd" id="llmConfigCard">
+      <div class="cd-t"><span class="ic">🤖</span>AI识别配置</div>
+      <div id="llmStatus" style="font-size:12px;color:var(--tx2);margin-bottom:10px"></div>
+      <div class="sg"><label>API Key</label><input type="password" id="llmApiKey" placeholder="输入阶跃星辰或OpenAI的API Key"></div>
+      <div style="display:flex;gap:8px">
+        <div class="sg" style="flex:1"><label>模型</label>
+          <select id="llmModel">
+            <option value="step-1v-8k">阶跃 step-1v-8k</option>
+            <option value="step-1v-32k">阶跃 step-1v-32k</option>
+            <option value="step-2v-mini">阶跃 step-2v-mini</option>
+            <option value="gpt-4o-mini">OpenAI gpt-4o-mini</option>
+            <option value="gpt-4o">OpenAI gpt-4o</option>
+          </select>
+        </div>
+        <div class="sg" style="flex:1"><label>API地址</label>
+          <select id="llmBase">
+            <option value="https://api.stepfun.com/v1">阶跃星辰</option>
+            <option value="https://api.openai.com/v1">OpenAI</option>
+          </select>
+        </div>
+      </div>
+      <button class="btn btn-p" onclick="saveLLMConfig()" style="font-size:12px;padding:8px 16px">保存配置</button>
+    </div>
+
+    <!-- 拍照上传 -->
+    <div class="cd">
+      <div class="cd-t"><span class="ic">📷</span>拍照识别</div>
+      <div class="upload-area" onclick="document.getElementById('fileInput').click()">
+        <div class="ic" style="font-size:40px">📸</div>
+        <p style="color:var(--tx2);font-size:13px">点击拍照或上传图片</p>
+        <p style="color:var(--tx2);font-size:11px;margin-top:5px">AI大模型自动识别文字内容</p>
+      </div>
+      <input type="file" id="fileInput" accept="image/*" capture="environment" onchange="handleImg(event)" style="display:none">
+      <!-- 图片预览 -->
+      <div id="imgPreview" style="display:none;margin-top:14px">
+        <img id="previewImg" style="width:100%;border-radius:12px;border:2px solid var(--bd)">
+        <div id="ocrLoading" style="display:none;text-align:center;padding:20px">
+          <div style="font-size:28px;animation:spin 1s linear infinite;display:inline-block">🔄</div>
+          <p style="color:var(--p);font-size:13px;margin-top:8px;font-weight:600" id="ocrLoadingText">AI正在识别中...</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 识别结果 -->
+    <div class="cd" id="ocrCard" style="display:none">
+      <div class="cd-t"><span class="ic">🔍</span>AI识别结果 <span id="ocrWordCount" style="font-size:12px;color:var(--ok);font-weight:400;margin-left:8px"></span></div>
+      <div id="ocrModelInfo" style="font-size:11px;color:var(--tx2);margin-bottom:10px"></div>
+      <div class="sg"><label>词库名称</label><input type="text" id="customName" placeholder="例如：第三单元生词"></div>
+      <textarea id="ocrEdit" style="width:100%;height:150px;padding:10px;border:2px solid var(--bd);border-radius:12px;font-size:13px;resize:vertical;margin:10px 0;line-height:1.8" placeholder="每行一个词"></textarea>
+      <div style="display:flex;gap:8px;margin-bottom:10px">
+        <button class="btn btn-warn" onclick="reRecognize('提取所有词语，每个词语单独一行输出，不要序号和标点')" style="flex:1;font-size:11px;padding:8px">重新识别（词语模式）</button>
+        <button class="btn btn-warn" onclick="reRecognize('逐字提取所有汉字，每个汉字单独一行')" style="flex:1;font-size:11px;padding:8px">重新识别（单字模式）</button>
+      </div>
+      <label style="display:flex;align-items:center;gap:8px;cursor:pointer;margin:10px 0">
+        <input type="checkbox" id="useMemoryCurve" checked> 使用记忆曲线自动复习
+      </label>
+      <button class="btn btn-p" onclick="createFromOCR()">添加到自定义词库</button>
+    </div>
+
+    <!-- 自定义词库列表 -->
+    <div class="cd" id="customListCard" style="display:none">
+      <div class="cd-t"><span class="ic">📚</span>我的自定义词库</div>
+      <div id="customList"></div>
+    </div>
+  </div>
+
+  <!-- ===== 预约任务 ===== -->
+  <div id="p-tasks" class="page">
+    <div class="cd">
+      <div class="cd-t"><span class="ic">📋</span>预约任务</div>
+      <div id="taskList"><div class="empty"><div class="ic">📭</div><p>暂无预约任务</p></div></div>
+    </div>
+  </div>
+
+  <!-- ===== 错题本 ===== -->
+  <div id="p-mistakes" class="page">
+    <div class="cd">
+      <div class="cd-t"><span class="ic">❌</span>错题本</div>
+      <div id="mistakeList"><div class="empty"><div class="ic">📝</div><p>还没有错题记录</p><p style="font-size:11px;margin-top:5px">听写时标记错误会自动记录</p></div></div>
+    </div>
+  </div>
+
+  <!-- ===== 播放 ===== -->
+  <div id="p-play" class="page">
+    <div class="cd play-panel" id="playPanel">
+      <div class="cd-t"><span class="ic">🔊</span><span id="playTitle">听写中</span></div>
+      <div class="pbar"><div class="pfill" id="pFill" style="width:0%"></div></div>
+      <div class="pinfo" id="pInfo">准备开始...</div>
+      <div class="big-word" id="bigWord">准备</div>
+      <div class="dots" id="dots"></div>
+      <div class="pinfo" id="pHint"></div>
+      
+      <!-- 结果标记 -->
+      <div class="result-btns" id="resultBtns" style="display:none">
+        <button class="btn-correct" onclick="markResult(true)">✓ 对了</button>
+        <button class="btn-wrong" onclick="markResult(false)">✗ 错了</button>
+      </div>
+      
+      <!-- 控制按钮 -->
+      <div class="control-btns">
+        <button class="btn btn-warn" id="pauseBtn" onclick="togglePause()">⏸ 暂停</button>
+        <button class="btn btn-err" onclick="stopPlay()">⏹ 停止</button>
+      </div>
+    </div>
+    <div class="cd" id="noPlay"><div class="empty"><div class="ic">🎧</div><p>没有正在进行的听写</p><p style="font-size:11px;margin-top:4px">去"预约"页面点播放按钮</p></div></div>
+  </div>
+</div>
+
+<!-- 暂停遮罩 -->
+<div class="pause-overlay" id="pauseOverlay">
+  <div class="pause-box">
+    <div class="icon">⏸</div>
+    <h3>已暂停</h3>
+    <p>点击继续恢复听写</p>
+    <button class="btn btn-p" onclick="resumePlay()">▶ 继续</button>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const API=location.origin;
+let curWords=[],curSubj='',curTaskId='',schType='once',playing=false,paused=false,ws=null;
+let currentWordIndex=0,currentWord=null,currentTaskWords=[];
+
+// ===== WebSocket =====
+function connectWS(){
+  ws=new WebSocket(API.replace('http','ws')+'/');
+  ws.onmessage=e=>{const d=JSON.parse(e.data);handleWS(d)};
+  ws.onclose=()=>setTimeout(connectWS,3000);
+}
+function handleWS(d){
+  if(d.type==='dictation_start'){tab('play');$('playPanel').classList.add('on');$('noPlay').style.display='none';$('playTitle').textContent=d.taskName;$('pInfo').textContent=d.message;toast('听写开始！');$('resultBtns').style.display='flex'}
+  if(d.type==='dictation_word'){currentWordIndex=d.wordIndex;currentWord=d;currentTaskWords=d.totalWords;speak(d.text,d.lang);$('bigWord').textContent=d.text;$('bigWord').className='big-word'+(d.lang==='en-US'?' en':'');$('pInfo').textContent=`第${d.wordIndex+1}/${d.totalWords}个 · 第${d.repeat}/${d.totalRepeat}遍`;$('pFill').style.width=((d.wordIndex+1)/d.totalWords*100)+'%';if(d.hint)$('pHint').textContent='提示: '+d.hint;updDots(d.repeat,d.totalRepeat)}
+  if(d.type==='dictation_word_complete'){currentWordIndex=d.wordIndex}
+  if(d.type==='dictation_end'){$('bigWord').textContent='✅';$('pInfo').textContent=d.message;$('resultBtns').style.display='none';toast('听写完成！');ldTasks()}
+  if(d.type==='dictation_paused'){showPauseOverlay()}
+  if(d.type==='dictation_resumed'){hidePauseOverlay()}
+}
+
+// ===== TTS =====
+function speak(t,lang){
+  if(!('speechSynthesis' in window))return;
+  speechSynthesis.cancel();
+  const u=new SpeechSynthesisUtterance(t);u.lang=lang;u.rate=lang==='zh-CN'?.8:.7;u.volume=1;
+  const vs=speechSynthesis.getVoices(),pv=vs.find(v=>v.lang.startsWith(lang.split('-')[0]));
+  if(pv)u.voice=pv;speechSynthesis.speak(u);
+}
+function updDots(cur,tot){const c=$('dots');c.innerHTML='';for(let i=1;i<=tot;i++){const d=document.createElement('div');d.className='dot'+(i===cur?' on':i<cur?' done':'');c.appendChild(d)}}
+
+// ===== 暂停功能 =====
+function togglePause(){
+  if(!playing)return;
+  if(paused){
+    resumePlay();
+  }else{
+    pausePlay();
+  }
+}
+function pausePlay(){
+  paused=true;
+  $('pauseOverlay').classList.add('on');
+  $('pauseBtn').textContent='▶ 继续';
+  speechSynthesis.pause();
+  if(ws&&curTaskId){
+    ws.send(JSON.stringify({type:'pause',taskId:curTaskId,wordIndex:currentWordIndex}));
+  }
+  fetch(`${API}/api/dictation/${curTaskId}/pause`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({wordIndex:currentWordIndex})});
+}
+function resumePlay(){
+  paused=false;
+  $('pauseOverlay').classList.remove('on');
+  $('pauseBtn').textContent='⏸ 暂停';
+  speechSynthesis.resume();
+  if(ws&&curTaskId){
+    ws.send(JSON.stringify({type:'resume',taskId:curTaskId,resumeFrom:currentWordIndex}));
+  }
+  fetch(`${API}/api/dictation/${curTaskId}/resume`,{method:'POST'});
+}
+function showPauseOverlay(){$('pauseOverlay').classList.add('on')}
+function hidePauseOverlay(){$('pauseOverlay').classList.remove('on');$('pauseBtn').textContent='⏸ 暂停'}
+
+// ===== 标记结果（错题本）=====
+function markResult(isCorrect){
+  if(!currentWord)return;
+  const word = currentWord.text || currentWord.word || '';
+  if(!word)return;
+
+  // 视觉反馈
+  const btnC = document.querySelector('.btn-correct');
+  const btnW = document.querySelector('.btn-wrong');
+  if(isCorrect){
+    btnC.style.transform='scale(1.2)';btnC.style.opacity='1';
+    btnW.style.opacity='.4';
+  }else{
+    btnW.style.transform='scale(1.2)';btnW.style.opacity='1';
+    btnC.style.opacity='.4';
+  }
+  setTimeout(()=>{
+    btnC.style.transform='';btnC.style.opacity='';
+    btnW.style.transform='';btnW.style.opacity='';
+  },800);
+
+  // 记录到后端错题本
+  fetch(`${API}/api/mistakes/record`,{
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({
+      taskId: curTaskId||'local',
+      subject: curSubj||'chinese',
+      word: word,
+      hint: currentWord.hint||'',
+      isCorrect: isCorrect,
+      wordIndex: currentWordIndex
+    })
+  }).catch(()=>{});
+
+  // WebSocket通知
+  if(ws){
+    ws.send(JSON.stringify({type:'mistake',taskId:curTaskId,word:{word,hint:currentWord.hint},isCorrect}));
+  }
+
+  toast(isCorrect ? '✓ 正确' : '✗ 已记录到错题本');
+}
+
+// ===== 本地听写引擎 =====
+// 规则：每个词语报3遍，每遍间隔5秒，词与词之间紧凑衔接
+function localPlay(words,subj,rep,intv,taskId){
+  playing=true;paused=false;curTaskId=taskId||'local';currentTaskWords=words;
+  tab('play');$('playPanel').classList.add('on');$('noPlay').style.display='none';
+  const isEn=subj==='english',total=words.length;let wi=0;
+  $('playTitle').textContent='听写进行中';$('pInfo').textContent=`共${total}个${isEn?'单词':'字词'}，每个读${rep}遍，间隔${intv}秒`;
+  $('resultBtns').style.display='flex';
+  speak('听写开始，请准备','zh-CN');
+  let cd=3;$('bigWord').textContent='3';$('bigWord').className='big-word';
+  const cdt=setInterval(()=>{cd--;if(cd>0)$('bigWord').textContent=cd;else{clearInterval(cdt);readW()}},1000);
+  function readW(){
+    if(!playing){finish();return}
+    if(paused)return;
+    if(wi>=total){finish();return}
+    const w=words[wi],text=isEn?(w.word||w):w,hint=isEn&&w.chinese?w.chinese:'';
+    currentWordIndex=wi;currentWord={text,hint,word:w};
+    let ri=0;
+    // 直接开始读第一遍，不报序号浪费时间
+    doRep();
+    function doRep(){
+      if(!playing)return;
+      if(paused){setTimeout(doRep,500);return}
+      if(ri>=rep){
+        // 当前词3遍读完，立即进入下一个词（只留1秒写字缓冲）
+        wi++;
+        $('pInfo').textContent=`第${Math.min(wi,total)}/${total}个完成`;
+        setTimeout(readW,1000);
+        return;
+      }
+      ri++;
+      $('bigWord').textContent=text;$('bigWord').className='big-word'+(isEn?' en':'');
+      $('pInfo').textContent=`第${wi+1}/${total}个 · 第${ri}/${rep}遍`;
+      $('pFill').style.width=((wi+1)/total*100)+'%';
+      $('pHint').textContent=hint?'提示: '+hint:'';updDots(ri,rep);
+      speak(text,isEn?'en-US':'zh-CN');
+      // 每遍之间严格间隔intv秒（默认5秒）
+      if(ri<rep){
+        setTimeout(doRep,intv*1000);
+      }else{
+        // 最后一遍读完后也等intv秒再进下一个词
+        setTimeout(()=>{wi++;$('pInfo').textContent=`第${Math.min(wi,total)}/${total}个完成`;setTimeout(readW,500)},intv*1000);
+      }
+    }
+  }
+  function finish(){playing=false;$('bigWord').textContent='✅';$('bigWord').className='big-word';$('pInfo').textContent='听写结束！';$('pFill').style.width='100%';$('resultBtns').style.display='none';speak('听写结束，请检查答案','zh-CN');toast('听写完成！')}
+}
+function stopPlay(){playing=false;paused=false;speechSynthesis.cancel();$('playPanel').classList.remove('on');$('noPlay').style.display='block';$('pHint').textContent='';$('resultBtns').style.display='none';$('pauseOverlay').classList.remove('on');toast('已停止')}
+
+// ===== Tab =====
+function tab(t){
+  document.querySelectorAll('.tabs button').forEach((b,i)=>b.classList.toggle('on',['select','camera','tasks','mistakes','play'][i]===t));
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('on'));$('p-'+t).classList.add('on');
+  if(t==='tasks')ldTasks();
+  if(t==='mistakes')ldMistakes();
+  if(t==='camera')ldCustomWords();
+}
+
+// ===== 课程选择 =====
+async function ldGrades(){
+  curSubj=$('sSubj').value;const s=$('sGrade');s.innerHTML='<option>加载中...</option>';s.disabled=true;
+  $('sUnit').innerHTML='<option>请先选年级</option>';$('sUnit').disabled=true;
+  $('sLesson').innerHTML='<option>请先选单元</option>';$('sLesson').disabled=true;$('previewCard').style.display='none';
+  if(!curSubj)return;
+  const r=await(await fetch(`${API}/api/grades/${curSubj}`)).json();
+  s.innerHTML='<option value="">请选择</option>'+r.grades.map(g=>`<option value="${g.id}">${g.name}</option>`).join('');s.disabled=false;
+}
+async function ldUnits(){
+  const gid=$('sGrade').value,s=$('sUnit');s.innerHTML='<option>加载中...</option>';
+  $('sLesson').innerHTML='<option>请先选单元</option>';$('sLesson').disabled=true;$('previewCard').style.display='none';
+  if(!gid)return;
+  const r=await(await fetch(`${API}/api/units/${curSubj}/${gid}`)).json();
+  s.innerHTML='<option value="">请选择</option>'+r.units.map(u=>`<option value="${u.id}">第${u.unit}单元 ${u.title}${u.wordCount?' ('+u.wordCount+'词)':''}</option>`).join('');s.disabled=false;
+  if(!r.units[0]?.hasLessons){$('sLesson').innerHTML='<option value="0">全部单词</option>';$('sLesson').disabled=false}
+}
+async function ldLessons(){
+  const uid=$('sUnit').value,s=$('sLesson');$('previewCard').style.display='none';if(!uid)return;
+  const r=await(await fetch(`${API}/api/lessons/${curSubj}/${$('sGrade').value}/${uid}`)).json();
+  if(r.lessons.length===1&&curSubj==='english'){s.innerHTML=`<option value="0">${r.lessons[0].title} (${r.lessons[0].wordCount}词)</option>`;s.disabled=false;ldWords();return}
+  s.innerHTML='<option value="">请选择</option>'+r.lessons.map(l=>`<option value="${l.id}">第${l.lesson}课 ${l.title} (${l.wordCount}词)</option>`).join('');s.disabled=false;
+}
+async function ldWords(){
+  const lid=$('sLesson').value;if(lid==='')return;
+  const r=await(await fetch(`${API}/api/words/${curSubj}/${$('sGrade').value}/${$('sUnit').value}/${lid}`)).json();
+  curWords=r.words;const isEn=curSubj==='english';
+  $('wCnt').textContent=r.words.length;
+  $('wPreview').innerHTML=r.words.map(w=>{const t=isEn?(w.word+' ('+w.chinese+')'):w;return`<span class="wt ${isEn?'en':''}">${t}</span>`}).join('');
+  $('previewCard').style.display='block';
+  const tmr=new Date();tmr.setDate(tmr.getDate()+1);$('schDate').value=tmr.toISOString().split('T')[0];
+}
+
+// ===== 预约类型 =====
+function setSchType(t,el){
+  schType=t;
+  document.querySelectorAll('.sch-type').forEach(e=>e.classList.remove('on'));el.classList.add('on');
+  ['once','daily','weekly','memory'].forEach(x=>$(`sch-${x}`).style.display=x===t?'block':'none');
+}
+function togWeek(el){el.classList.toggle('on')}
+function getSchDays(){return[...document.querySelectorAll('.week-btn.on')].map(e=>+e.dataset.d)}
+function getSchConfig(){
+  const c={scheduleType:schType,useMemoryCurve:schType==='memory'};
+  if(schType==='once'){c.scheduleDate=$('schDate').value;c.scheduleTime=$('schTime1').value}
+  if(schType==='daily'){c.scheduleTime=$('schTime2').value;c.scheduleEndDate=$('schEnd1').value}
+  if(schType==='weekly'){c.scheduleDays=getSchDays();c.scheduleTime=$('schTime3').value;c.scheduleEndDate=$('schEnd2').value}
+  return c;
+}
+
+// ===== 创建任务 =====
+async function createTask(){
+  const sch=getSchConfig();
+  if(schType==='once'&&!sch.scheduleDate){toast('请选择日期');return}
+  if(schType==='weekly'&&(!sch.scheduleDays||!sch.scheduleDays.length)){toast('请选择周几');return}
+  const body={subject:curSubj,gradeId:$('sGrade').value,unitId:$('sUnit').value,lessonId:$('sLesson').value,
+    repeatCount:+$('iRepeat').value||3,interval:+$('iInterval').value||5,...sch};
+  await fetch(`${API}/api/task/create`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
+  const labels={once:'单次预约',daily:'每天定时',weekly:'每周定时',memory:'记忆曲线'};
+  toast(labels[schType]+'任务已创建！');tab('tasks');
+}
+function startNow(){if(!curWords.length){toast('请先选课文');return}localPlay(curWords,curSubj,+$('iRepeat').value||3,+$('iInterval').value||5)}
+
+// ===== 任务列表 =====
+async function ldTasks(){
+  const r=await(await fetch(`${API}/api/tasks`)).json();
+  const c=$('taskList');
+  if(!r.tasks.length){c.innerHTML='<div class="empty"><div class="ic">📭</div><p>暂无预约任务</p></div>';return}
+  c.innerHTML=r.tasks.map(t=>{
+    const sch=t.schedule||{};
+    const typeLabel={once:'单次',daily:'每天',weekly:'每周','memory-curve':'记忆'}[sch.type]||'未知';
+    const typeClass={once:'sch-once',daily:'sch-daily',weekly:'sch-weekly','memory-curve':'sch-memory'}[sch.type]||'';
+    const dayNames=['','一','二','三','四','五','六','日'];
+    let schDesc=sch.time||'';
+    if(sch.type==='once')schDesc=(sch.date||'')+' '+schDesc;
+    if(sch.type==='weekly')schDesc='周'+sch.days.map(d=>dayNames[d]).join('、')+' '+schDesc;
+    if(sch.type==='memory-curve')schDesc='艾宾浩斯8轮复习';
+    const statusBadge=t.enabled?(t.status==='running'?'<span class="badge b-run">播放中</span>':'<span class="badge b-on">已启用</span>'):'<span class="badge b-off">已停用</span>';
+    const nextRun=t.nextRunAt?`<div class="next-run">⏰ 下次: ${fmtDT(t.nextRunAt)}</div>`:'';
+    return`<div class="task"><div class="task-top"><div><h4>${t.name}</h4><div class="meta">${t.words.length}词 · 读${t.repeatCount}遍 · 隔${t.interval}秒 ${statusBadge}</div><div class="sch-info ${typeClass}">📅 ${typeLabel} ${schDesc}</div>${nextRun}</div><div class="task-acts"><button class="sm-play" onclick="playTask('${t.id}')">▶</button>${t.useMemoryCurve?'':'<button class="sm-toggle" onclick="togTask(\''+t.id+'\','+!t.enabled+'">'+(t.enabled?'⏸':'▶')+'</button>'}<button class="sm-del" onclick="delTask('${t.id}')">✕</button></div></div></div>`;
+  }).join('');
+}
+function fmtDT(iso){if(!iso)return'';const d=new Date(iso);return`${d.getMonth()+1}/${d.getDate()} ${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}`}
+async function playTask(id){
+  const r=await(await fetch(`${API}/api/dictation/sequence/${id}`)).json();
+  curTaskId=id;
+  if(r.pauseState&&r.pauseState.paused){
+    if(confirm('该任务之前已暂停，是否从暂停处继续？')){
+      localPlay(r.task.words,r.task.subject,r.task.repeatCount,r.task.interval,id);
+      return;
+    }
+  }
+  localPlay(r.task.words,r.task.subject,r.task.repeatCount,r.task.interval,id);
+}
+async function togTask(id,en){await fetch(`${API}/api/task/${id}`,{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify({enabled:en})});toast(en?'已启用':'已停用');ldTasks()}
+async function delTask(id){if(!confirm('删除此任务？'))return;await fetch(`${API}/api/task/${id}`,{method:'DELETE'});toast('已删除');ldTasks()}
+
+// ===== 错题本 =====
+async function ldMistakes(){
+  const r=await(await fetch(`${API}/api/mistakes`)).json();
+  const c=$('mistakeList');
+  if(!r.mistakes.length){c.innerHTML='<div class="empty"><div class="ic">📝</div><p>还没有错题记录</p><p style="font-size:11px;margin-top:5px">听写时标记错误会自动记录</p></div>';return}
+  c.innerHTML=r.mistakes.map(m=>`<div class="mistake-item"><h4>${m.name}</h4><div class="wrong-words">${m.wrongWords.slice(0,10).map(w=>`<span class="wrong-word" title="错${w.count}次">${w.word}</span>`).join('')}${m.wrongWords.length>10?'<span class="wrong-word">+'+(m.wrongWords.length-10)+'</span>':''}</div><div class="stats">共${m.uniqueWrong}个错字，累计错${m.totalWrong}次 · 最后错误：${fmtDT(m.wrongWords[0]?.lastWrongAt)}</div><button class="btn btn-p" style="margin-top:8px" onclick="createReviewTask('${m.name}')">🧠 生成记忆曲线复习</button></div>`).join('');
+}
+async function createReviewTask(key){
+  const r=await(await fetch(`${API}/api/mistakes/review-task`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({mistakeKey:key})})).json();
+  toast('错题复习任务已创建！');tab('tasks');
+}
+
+// ===== 拍照OCR & 自定义词库 =====
+async function handleImg(e){
+  const f=e.target.files[0];if(!f)return;
+  const fd=new FormData();fd.append('image',f);
+  toast('图片上传中...');
+  const r=await(await fetch(`${API}/api/ocr/upload`,{method:'POST',body:fd})).json();
+  if(r.success){$('ocrCard').style.display='block';toast('请在下方输入识别的词汇');}
+}
+async function createFromOCR(){
+  const name=$('customName').value||'自定义词库';
+  const words=$('ocrEdit').value.split('\n').map(w=>w.trim()).filter(w=>w);
+  if(!words.length){toast('没有词汇');return}
+  const isEn=/^[a-zA-Z\s\(\)]+$/.test(words[0].replace(/[\u4e00-\u9fa5]/g,''));
+  const useMemory=$('useMemoryCurve').checked;
+  const body={name,subject:isEn?'english':'chinese',words:isEn?words.map(w=>{const m=w.match(/(.+?)\s*\((.+?)\)/);return m?{word:m[1].trim(),chinese:m[2].trim()}:{word:w,chinese:''}}):words,useMemoryCurve:useMemory};
+  await fetch(`${API}/api/custom-words/add`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
+  toast(useMemory?'已添加并设置记忆曲线复习！':'已添加到自定义词库！');$('ocrEdit').value='';$('customName').value='';ldCustomWords();
+}
+async function ldCustomWords(){
+  const r=await(await fetch(`${API}/api/custom-words`)).json();
+  const c=$('customList');
+  if(r.words.length){$('customListCard').style.display='block'}
+  c.innerHTML=r.words.map(w=>`<div class="custom-item"><div class="info"><h4>${w.name}</h4><p>${w.subject==='english'?'英语':'语文'} · ${w.words.length}词 · ${w.useMemoryCurve?'记忆曲线':'普通'}</p></div><div><button class="btn btn-ok" style="padding:6px 12px;font-size:12px" onclick="playCustom('${w.id}')">▶</button><button class="btn btn-err" style="padding:6px 12px;font-size:12px;margin-left:5px" onclick="delCustom('${w.id}')">✕</button></div></div>`).join('');
+}
+async function playCustom(id){
+  const r=await(await fetch(`${API}/api/custom-words`)).json();
+  const w=r.words.find(x=>x.id===id);if(!w)return;
+  curWords=w.words;curSubj=w.subject;
+  localPlay(w.words,w.subject,3,5);
+}
+async function delCustom(id){if(!confirm('删除此自定义词库？'))return;await fetch(`${API}/api/custom-words/${id}`,{method:'DELETE'});ldCustomWords();}
+
+// ===== 工具 =====
+function $(id){return document.getElementById(id)}
+function toast(m){const t=$('toast');t.textContent=m;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2500)}
+
+window.addEventListener('load',()=>{
+  if('speechSynthesis' in window){speechSynthesis.getVoices();speechSynthesis.onvoiceschanged=()=>speechSynthesis.getVoices()}
+  connectWS();ldCustomWords();
+});
+</script>
+</body>
+</html>
