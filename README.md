@@ -1,6 +1,8 @@
 # 📝 报听写机器人 Dictation Robot
 
 > **中国浙江 · 杭州学军小学306班 出品**
+> 
+> Author: Karl \<athenayan123@gmail.com\>
 
 智能听写机器人，基于人教版语文和英语教材，支持SM-2记忆曲线自动复习、LLM大模型拍照识别、预约定时听写。
 
